@@ -1,3 +1,5 @@
+![DuoBahn Logo](docs/logo-small.png)
+
 # kotlin-surfaceduo-duobahn
 > DuoBahn for Surface Duo will be an Kotlin Compose-based Android app for foldable devices that uses the federal German Autobahn API as a data source.
 
