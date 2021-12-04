@@ -1,5 +1,5 @@
 # kotlin-surfaceduo-duobahn
-> DuoBahn for Surface Duo will be an Kotline Compose-based Android app for foldable devices that uses the official German Autobahn API as a data source.
+> DuoBahn for Surface Duo will be an Kotlin Compose-based Android app for foldable devices that uses the federal German Autobahn API as a data source.
 
 ## Build status
 
@@ -32,21 +32,26 @@ You can find the concept of the aggreagor script at [script_concept.md](https://
 * Public web store to save the generated, monolyhic JSON file
 
 ### App
-* Android Studio (Artic fox or higher)
+* Android Studio (Artic Fox or higher)
 * Surface Duo emulator, Android emulator or actual an device
 
 ## Structure
 * `resources/` contains for example used api definitions
 * `scripts/` contains all required scripts to aggregate data
+* * `docs/` contains all documention and readme based file
 * `app/` contains all Android app related files
 
 # Publications
-
 - Dr. Windows [Auf zu unseren neuen Surface Duo App „DuoBahn“: Teil 1](https://www.drwindows.de/news/auf-zu-unseren-neuen-surface-duo-app-duobahn-teil-1) article
-
 
 ## Please keep in mind
 This project has absolutely neither time line until it is production ready nor that it's the perfect example writing scripts, Kotlin apps or using the feature of a Surface Duo device. It's a playground for me to learn new skills and play around with new concepts like dual screen devices.
+
+## Other programms I used
+- Microsoft [OneNote](https://www.onenote.com/) as information storage around the idea of the app
+- Microsoft [Teams](https://products.office.com/en-US/microsoft-teams/group-chat-software) to clarify open question with the Dr. Windows team
+- [Visual Studio Code](https://code.visualstudio.com/) for all, except source code editing, writings like mark down files
+- [Figma](https://figma.com) for any graphical asset
 
 ## Authors
 
@@ -54,6 +59,7 @@ At the moment, it is just me, [Tobi]([https://tscholze.github.io).
 
 ## Acknowledgments
 
+* [Dr. Windows](https://drwindows.de) community
 * [Federal Autobahn API](https://autobahn.api.bund.dev/)
 * [Surface Duo SDK Technet Community](https://techcommunity.microsoft.com/t5/surface-duo-sdk/bd-p/SurfaceDuoSDK) for helping beginners, too.
 
