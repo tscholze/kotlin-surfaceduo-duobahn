@@ -12,7 +12,7 @@
 ## Idea
 
 ### Fasicilitating an open, federal API
-The open data project of the German government is one of the things I think should be promoted as "hey guys, we have a lot of free (tax-paid) data sets - let's use them our way!".
+The [open data / open api project of the German government](https://autobahn.api.bund.dev) contains a lot of information of Auotbahnen (highways) is one of the things I think should be promoted as "hey guys, we have a lot of free (tax-paid) data sets - let's use them our way!".
 
 ### Why the focus on Surface Duo?
 I'm not an Android user, I do not really like this operating system but it has some quite interesting devices in its ecosystem. One of them is the Microsoft Surface Duo. A dual screen device which could be the first mainstream foldable device for developers. 
