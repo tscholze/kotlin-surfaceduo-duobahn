@@ -40,12 +40,13 @@ You can find the concept of the aggreagor script at [script_concept.md](https://
 ## Structure
 * `resources/` contains for example used api definitions
 * `scripts/` contains all required scripts to aggregate data
-* * `docs/` contains all documention and readme based file
+  * [Kotlin aggregator script](https://github.com/tscholze/kotlin-aggregator-script-duobahn)
+* `docs/` contains all documention and readme based file
 * `app/` contains all Android app related files
 
 # Publications
-- Dr. Windows [Auf zu unseren neuen Surface Duo App „DuoBahn“: Teil 1](https://www.drwindows.de/news/auf-zu-unseren-neuen-surface-duo-app-duobahn-teil-1) article
-
+- Dr. Windows [DuoBahn, das Entwicklertagebuch, Teil 1: Auf geht's zum neuen Bastelprojekt](https://www.drwindows.de/news/auf-zu-unseren-neuen-surface-duo-app-duobahn-teil-1) article
+- Dr. Windows [DuoBahn, das Entwicklertagebuch, Teil 2: Ab ans Reißbrett!](https://www.drwindows.de/news/duobahn-das-entwicklertagebuch-teil-2-ab-ans-reissbrett)
 ## Please keep in mind
 This project has absolutely neither time line until it is production ready nor that it's the perfect example writing scripts, Kotlin apps or using the feature of a Surface Duo device. It's a playground for me to learn new skills and play around with new concepts like dual screen devices.
 
