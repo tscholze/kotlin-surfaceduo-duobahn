@@ -9,6 +9,7 @@ import io.ktor.client.features.logging.*
 import io.ktor.client.request.*
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import org.slf4j.LoggerFactory
 import java.io.File
 import java.time.LocalDateTime
 import java.time.ZoneOffset
@@ -37,7 +38,7 @@ class AutobahnApiRepository {
 
         // 1. Get Autobahn ids
         // from: https://verkehr.autobahn.de/o/autobahn/
-        Logger.DEFAULT.log("Get all Autobahn IDs")
+        logger.debug("Get all Autobahn IDs")
 
         val ids: AutobahnIds = client.get(AUTOBAHN_URL)
 
@@ -45,7 +46,9 @@ class AutobahnApiRepository {
         val autobahnen: List<Autobahn> = ids.roads
             .filter { !it.contains("/") }
             .map {
-                Logger.DEFAULT.log("Fetching roadworks for ID $it")
+
+                // Fetch information.
+                logger.debug("Fetching roadworks for ID $it")
                 val roadworks: Roadworks = client.get("$AUTOBAHN_URL/$it/services/roadworks")
                 val webcams: Webcams = client.get("$AUTOBAHN_URL/$it/services/webcam")
                 val warnings: Warnings = client.get("$AUTOBAHN_URL/$it/services/warning")
@@ -53,7 +56,8 @@ class AutobahnApiRepository {
                 val chargingStations: ElectricChargingStations =
                     client.get("$AUTOBAHN_URL/$it/services/electric_charging_station")
 
-                Logger.DEFAULT.log("Building data class for ID $it")
+                // Create Autobahn object.
+                logger.debug("Building data class for ID $it")
                 Autobahn(
                     it,
                     roadworks.roadworks,
@@ -72,7 +76,7 @@ class AutobahnApiRepository {
             autobahnen
         )
 
-        // Check if result should be saved to disk.
+        // 3. Check if result should be saved to disk.
         if (save) {
             // Create json file
             val json = Json.encodeToString(autobahns)
@@ -81,11 +85,11 @@ class AutobahnApiRepository {
             save(json, "autobahns.json", true)
         }
 
-        // Log duration
+        // 4. Log duration
         val deltaSeconds = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC) - startTime
-        print("It took $deltaSeconds seconds to finish.")
+        logger.debug("It took $deltaSeconds seconds to finish.")
 
-        // Call completion if set
+        // 5. Call completion if set
         completion?.invoke(autobahnen)
     }
 
@@ -105,20 +109,20 @@ class AutobahnApiRepository {
         // If file already exists and ´overrideExistingFile` is true
         // -> delete old file.
         if (fileExists && overrideExistingFile) {
-            Logger.DEFAULT.log("Deleting already existing file at path: $filename")
+            logger.debug("Deleting already existing file at path: $filename")
             file.delete()
         }
 
         // If file already exists but ´overrideExistingFile` is false
         // -> abort operation
         if (fileExists && !overrideExistingFile) {
-            Logger.DEFAULT.log("File cannot be written, because it already exists at path: $filename")
+            logger.debug("File cannot be written, because it already exists at path: $filename")
             return
         }
 
         // Write file to disc.
         file.writeText(input)
-        Logger.DEFAULT.log("Wrote file to path ${file.path}")
+        logger.debug("Wrote file to path ${file.path}")
     }
 
     // MARK: - Companion object -
@@ -133,6 +137,11 @@ class AutobahnApiRepository {
          * Endpoint url of autobahn ids.
          */
         private const val AUTOBAHN_URL = "${BASE_URL}/autobahn/"
+
+        /**
+         * Repository's logger.
+         */
+        private val logger = LoggerFactory.getLogger(AutobahnApiRepository::class.java)
 
         /**
          * Http client which will be used for all network requests.
