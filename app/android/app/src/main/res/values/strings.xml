@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">DuoBahn</string>
+    <string name="map_fab_title">Einstellungen ändern</string>
+    <string name="app_disclaimer">This is an educational app, not meant for production. See "help" for more.</string>
+</resources>
