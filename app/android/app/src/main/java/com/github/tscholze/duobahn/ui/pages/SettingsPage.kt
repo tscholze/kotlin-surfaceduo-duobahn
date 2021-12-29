@@ -19,5 +19,20 @@ fun SettingsPage() {
             fontWeight = FontWeight.Bold,
             fontSize = 28.sp
         )
+        Text(
+            "Hello World",
+            fontWeight = FontWeight.Bold,
+            fontSize = 28.sp
+        )
+        Text(
+            "Hello World",
+            fontWeight = FontWeight.Bold,
+            fontSize = 28.sp
+        )
+        Text(
+            "Hello World",
+            fontWeight = FontWeight.Bold,
+            fontSize = 28.sp
+        )
     }
 }
