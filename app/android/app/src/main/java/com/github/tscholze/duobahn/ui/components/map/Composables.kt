@@ -76,24 +76,3 @@ fun MapView() {
         }
     }
 }
-
-@Composable
-fun MapContent()
-{
-    Scaffold(
-        floatingActionButton = { MapContentFloatingActionButton() }) {
-        MapView()
-    }
-}
-
-@Composable
-fun MapContentFloatingActionButton() {
-
-    ExtendedFloatingActionButton(
-        text = { Text(text = stringResource(id = R.string.map_fab_title)) },
-        contentColor = Color.White,
-        backgroundColor = AutobahnBlue,
-        onClick = { print("TEST") },
-        icon = { Icon(Icons.Default.Settings, contentDescription = stringResource(R.string.map_fab_title)) },
-    )
-}

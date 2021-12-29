@@ -5,7 +5,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.github.tscholze.duobahn.ui.pages.MapPage
+import com.github.tscholze.duobahn.ui.pages.PreparationPage
+import com.github.tscholze.duobahn.ui.pages.SettingsPage
 import com.github.tscholze.duobahn.ui.theme.DuoBahnTheme
 
 class MainActivity : ComponentActivity() {
@@ -16,7 +21,22 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     color = MaterialTheme.colors.background
                 ) {
-                   MapPage()
+                    val navController = rememberNavController()
+
+                    // App-wide navigation host.
+                    NavHost(
+                        navController = navController,
+                        startDestination = "preparation"
+                    ) {
+                        // Preparation page.
+                        composable("preparation") { PreparationPage(navController) }
+
+                        // Map page.
+                        composable("map") { MapPage(navController) }
+
+                        // Settings page.
+                        composable("settings") { SettingsPage() }
+                    }
                 }
             }
         }
