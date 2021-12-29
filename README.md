@@ -45,8 +45,9 @@ You can find the concept of the aggreagor script at [script_concept.md](https://
 * `app/` contains all Android app related files
 
 # Publications
-- Dr. Windows [DuoBahn, das Entwicklertagebuch, Teil 1: Auf geht's zum neuen Bastelprojekt](https://www.drwindows.de/news/auf-zu-unseren-neuen-surface-duo-app-duobahn-teil-1) article
+- Dr. Windows [DuoBahn, das Entwicklertagebuch, Teil 1: Auf geht's zum neuen Bastelprojekt](https://www.drwindows.de/news/auf-zu-unseren-neuen-surface-duo-app-duobahn-teil-1)
 - Dr. Windows [DuoBahn, das Entwicklertagebuch, Teil 2: Ab ans Reißbrett!](https://www.drwindows.de/news/duobahn-das-entwicklertagebuch-teil-2-ab-ans-reissbrett)
+- Dr. Windows [DuoBahn, das Entwicklertagebuch, Teil 3: Ihr Rohdaten'lein kommet](https://www.drwindows.de/news/duobahn-das-entwicklertagebuch-teil-3-ihr-rohdatenlein-kommet)
 ## Please keep in mind
 This project has absolutely neither time line until it is production ready nor that it's the perfect example writing scripts, Kotlin apps or using the feature of a Surface Duo device. It's a playground for me to learn new skills and play around with new concepts like dual screen devices.
 
