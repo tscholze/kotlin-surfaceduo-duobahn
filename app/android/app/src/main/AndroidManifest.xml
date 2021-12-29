@@ -3,12 +3,13 @@
     package="com.github.tscholze.duobahn">
 
     <application
-        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.DuoBahn">
+        android:theme="@style/Theme.DuoBahn"
+        android:fullBackupContent="true"
+        android:allowBackup="true">
 
         <!-- Meta data -->
         <meta-data

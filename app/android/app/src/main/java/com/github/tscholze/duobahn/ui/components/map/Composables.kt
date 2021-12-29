@@ -1,4 +1,4 @@
-package com.github.tscholze.duobahn.ui.map
+package com.github.tscholze.duobahn.ui.components.map
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -25,12 +25,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-@Composable
 /**
-* Composes a map view.
+ * Composes a map view.
  *
  * TODO: Show marks, etc.
-*/
+ */
+@Composable
 fun MapView() {
 
     // MARK: - State properties -

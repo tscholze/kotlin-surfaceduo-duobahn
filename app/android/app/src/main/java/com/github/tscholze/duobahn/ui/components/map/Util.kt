@@ -1,4 +1,4 @@
-package com.github.tscholze.duobahn.ui.map
+package com.github.tscholze.duobahn.ui.components.map
 
 import android.os.Bundle
 import androidx.compose.runtime.Composable
