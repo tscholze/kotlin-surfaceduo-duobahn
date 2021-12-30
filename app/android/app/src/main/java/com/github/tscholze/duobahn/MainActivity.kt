@@ -18,11 +18,13 @@ import com.github.tscholze.duobahn.ui.theme.DuoBahnTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             DuoBahnTheme {
                 Surface(
                     color = MaterialTheme.colors.background
                 ) {
+                    // State-safe navigation controller
                     val navController = rememberNavController()
 
                     // App-wide navigation host.

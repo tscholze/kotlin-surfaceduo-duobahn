@@ -1,11 +1,12 @@
 package com.github.tscholze.duobahn.ui.pages
 
+import android.annotation.SuppressLint
 import android.os.CountDownTimer
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -14,7 +15,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.github.tscholze.duobahn.R
+import com.github.tscholze.duobahn.data.network.dto.Autobahn
+import com.github.tscholze.duobahn.data.network.repositories.UnprocessedDataRepository
 import com.github.tscholze.duobahn.ui.theme.AutobahnBlue
+import kotlinx.coroutines.launch
+import org.koin.androidx.compose.get
 
 /**
  * The PreparationPage will be shown wether the app
@@ -24,9 +29,17 @@ import com.github.tscholze.duobahn.ui.theme.AutobahnBlue
  * @param navController: App-wide navigation controller.
  */
 @Composable
-fun PreparationPage(navController: NavController) {
+fun PreparationPage(navController: NavController, repository: UnprocessedDataRepository = get()) {
 
-    requestData(navController = navController)
+    val coroutineScope = rememberCoroutineScope()
+    val autobahns = remember { mutableListOf<Autobahn>() }
+
+
+    LaunchedEffect(navController, repository) {
+        coroutineScope.launch {
+            repository.fetchAutobahns { navController.navigate("map") }
+        }
+    }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -56,14 +69,4 @@ fun PreparationPage(navController: NavController) {
 
 private fun requestData(navController: NavController) {
 
-    val foo = object: CountDownTimer(5000L, 1000L) {
-        override fun onTick(millisUntilFinished: Long) {
-        }
-
-        override fun onFinish() {
-            navController.navigate("map")
-        }
-    }
-
-    foo.start()
 }

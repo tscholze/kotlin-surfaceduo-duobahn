@@ -3,4 +3,5 @@
     <string name="map_fab_title">Einstellungen ändern</string>
     <string name="app_disclaimer">This is an educational app, not meant for production. See "help" for more.</string>
     <string name="misc_logo_description">DuoBahn logo</string>
+    <string name="settings_choose_autobahns_title">Wähle bis zu 3 Autobahnen</string>
 </resources>
