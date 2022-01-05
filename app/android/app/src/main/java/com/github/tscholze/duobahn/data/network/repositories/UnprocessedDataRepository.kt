@@ -1,5 +1,6 @@
 package com.github.tscholze.duobahn.data.network.repositories
 
+import com.github.tscholze.duobahn.data.domain.models.toModel
 import com.github.tscholze.duobahn.data.network.dto.Autobahn
 import com.github.tscholze.duobahn.data.network.dto.Autobahns
 import io.ktor.client.*
@@ -15,11 +16,11 @@ class UnprocessedDataRepository: KoinComponent {
 
     // MARK: - Private properties -
 
-    private var autobahns = listOf<Autobahn>()
+    private var autobahns = listOf<com.github.tscholze.duobahn.data.domain.models.Autobahn>()
 
     // MARK: - Internal getters -
 
-    fun getAutobahns(): List<Autobahn>
+    fun getAutobahns(): List<com.github.tscholze.duobahn.data.domain.models.Autobahn>
     {
         return autobahns
 
@@ -41,13 +42,13 @@ class UnprocessedDataRepository: KoinComponent {
     }
 
     suspend fun fetchAutobahns(
-        completion: ((List<Autobahn>) -> Unit)? = null
+        completion: ((List<com.github.tscholze.duobahn.data.domain.models.Autobahn>) -> Unit)? = null
     ) {
         // 1. Fetch data from remote.
         val container = client.get<Autobahns>(urlString = URL)
 
         // 2. Cache fetched data.
-        autobahns = container.autobahns
+        autobahns = container.autobahns.map { it.toModel() }
 
         // 3. Invoke optional completion block.
         completion?.invoke(autobahns)

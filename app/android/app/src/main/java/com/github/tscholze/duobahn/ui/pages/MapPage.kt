@@ -17,9 +17,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.github.tscholze.duobahn.R
+import com.github.tscholze.duobahn.data.domain.models.toMarkerOptions
+import com.github.tscholze.duobahn.data.network.repositories.UnprocessedDataRepository
 import com.github.tscholze.duobahn.ui.components.map.MapView
 import com.github.tscholze.duobahn.ui.theme.AutobahnBlue
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.get
 
 
 /**
@@ -29,7 +32,7 @@ import kotlinx.coroutines.launch
  */
 @Composable
 @ExperimentalMaterialApi
-fun MapPage(navController: NavController) {
+fun MapPage(navController: NavController, repository: UnprocessedDataRepository = get()) {
 
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed)
@@ -44,7 +47,9 @@ fun MapPage(navController: NavController) {
     ) {
         // Z index: 0
         Box {
-            MapView()
+            MapView(
+                markers = repository.getAutobahns().first().roadworks.map { it.toMarkerOptions() }
+            )
 
             // Z index: 1
             Text(
