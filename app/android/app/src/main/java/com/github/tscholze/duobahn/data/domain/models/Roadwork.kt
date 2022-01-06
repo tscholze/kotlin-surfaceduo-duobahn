@@ -76,7 +76,7 @@ fun com.github.tscholze.duobahn.data.network.dto.Roadwork.toModel(): Roadwork  {
         ?.joinToString { "" }
         ?.trim()
 
-    val coordinate = Coordinate(this.coordinate.lat.toDouble(), this.coordinate.long.toDouble())
+    val coordinate = this.coordinate.toModel()
     val startDate = startString.toModelDate()
     val endDate = endString?.toModelDate()
 

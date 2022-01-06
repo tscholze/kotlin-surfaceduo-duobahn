@@ -13,6 +13,7 @@ data class Autobahn(
     val id: String,
     val name: String,
     val roadworks: List<Roadwork>,
+    val webcams: List<Webcam>
 )
 
 // MARK: - From Mapper -
@@ -24,4 +25,5 @@ fun com.github.tscholze.duobahn.data.network.dto.Autobahn.toModel() = Autobahn(
     id = id,
     name = id,
     roadworks = roadworks.map { it.toModel() },
+    webcams = webcams.map { it.toModel() }
 )

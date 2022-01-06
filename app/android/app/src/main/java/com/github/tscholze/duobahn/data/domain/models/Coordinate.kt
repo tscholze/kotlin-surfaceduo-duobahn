@@ -13,6 +13,18 @@ data class Coordinate(
     val long: Double
 )
 
+// MARK: - From Mapper -
+
+/**
+ * Gets model from dto.
+ */
+fun com.github.tscholze.duobahn.data.network.dto.Coordinate.toModel() =
+    Coordinate(
+        lat = lat.toDouble(),
+        long = long.toDouble()
+    )
+
+
 // MARK: - To Mapper -
 
 /**

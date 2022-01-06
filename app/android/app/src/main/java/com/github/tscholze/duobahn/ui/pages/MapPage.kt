@@ -45,10 +45,10 @@ fun MapPage(navController: NavController, repository: UnprocessedDataRepository 
             MapContentFloatingActionButton(bottomSheetScaffoldState)
         }
     ) {
-        // Z index: 0
         Box {
+            // Z index: 0
             MapView(
-                markers = repository.getAutobahns().first().roadworks.map { it.toMarkerOptions() }
+                markers = repository.getAutobahns().first().webcams.map { it.toMarkerOptions() }
             )
 
             // Z index: 1
@@ -72,7 +72,7 @@ private fun MapContentFloatingActionButton(state: BottomSheetScaffoldState) {
     val coroutineScope = rememberCoroutineScope()
 
     ExtendedFloatingActionButton(
-        text = { Text(text = stringResource(id = R.string.map_fab_title)) },
+        text = { Text(text = stringResource(R.string.map_fab_title)) },
         contentColor = Color.White,
         backgroundColor = AutobahnBlue,
         onClick = {
