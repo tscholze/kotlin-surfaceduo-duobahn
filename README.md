@@ -12,7 +12,7 @@
 ## Idea
 
 ### Fasicilitating an open, federal API
-The [open data / open api project of the German government](https://autobahn.api.bund.dev) contains a lot of information of Auotbahnen (highways) is one of the things I think should be promoted as "hey guys, we have a lot of free (tax-paid) data sets - let's use them our way!".
+The [open data / open api project bund.dev](https://autobahn.api.bund.dev) contains a lot of information of Auotbahnen (highways) is one of the things I think should be promoted as "hey guys, we have a lot of free (tax-paid) data sets - let's use them our way!".
 
 ### Why the focus on Surface Duo?
 I'm not an Android user, I do not really like this operating system but it has some quite interesting devices in its ecosystem. One of them is the Microsoft Surface Duo. A dual screen device which could be the first mainstream foldable device for developers. 
@@ -64,8 +64,9 @@ At the moment, it is just me, [Tobi]([https://tscholze.github.io).
 ## Acknowledgments
 
 * [Dr. Windows](https://drwindows.de) community
-* [Federal Autobahn API](https://autobahn.api.bund.dev/)
+* [Open Data Autobahn API](https://autobahn.api.bund.dev/)
 * [Surface Duo SDK Technet Community](https://techcommunity.microsoft.com/t5/surface-duo-sdk/bd-p/SurfaceDuoSDK) for helping beginners, too.
+* [https://www.figma.com/file/0FmgLalxKVoayn4bwRcqVx/autobahn?node-id=0%3A1](Figma file) with rough ui ideas
 
 ## License
 
