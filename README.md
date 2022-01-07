@@ -66,7 +66,7 @@ At the moment, it is just me, [Tobi]([https://tscholze.github.io).
 * [Dr. Windows](https://drwindows.de) community
 * [Open Data Autobahn API](https://autobahn.api.bund.dev/)
 * [Surface Duo SDK Technet Community](https://techcommunity.microsoft.com/t5/surface-duo-sdk/bd-p/SurfaceDuoSDK) for helping beginners, too.
-* [https://www.figma.com/file/0FmgLalxKVoayn4bwRcqVx/autobahn?node-id=0%3A1](Figma file) with rough ui ideas
+* [Figma file](https://www.figma.com/file/0FmgLalxKVoayn4bwRcqVx/autobahn?node-id=0%3A1) with rough ui ideas
 
 ## License
 
