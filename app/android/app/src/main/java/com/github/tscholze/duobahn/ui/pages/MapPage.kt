@@ -12,6 +12,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -37,6 +38,7 @@ fun MapPage(navController: NavController, repository: UnprocessedDataRepository 
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed)
     )
+
     BottomSheetScaffold(
         scaffoldState = bottomSheetScaffoldState,
         sheetContent = { SettingsPage() },
@@ -48,7 +50,10 @@ fun MapPage(navController: NavController, repository: UnprocessedDataRepository 
         Box {
             // Z index: 0
             MapView(
-                markers = repository.getAutobahns().first().webcams.map { it.toMarkerOptions() }
+                markers = repository.getAutobahns()
+                    .first()
+                    .webcams
+                    .map { it.toMarkerOptions(LocalContext.current) }
             )
 
             // Z index: 1
@@ -68,7 +73,9 @@ fun MapPage(navController: NavController, repository: UnprocessedDataRepository 
 
 @ExperimentalMaterialApi
 @Composable
-private fun MapContentFloatingActionButton(state: BottomSheetScaffoldState) {
+private fun MapContentFloatingActionButton(
+    state: BottomSheetScaffoldState
+) {
     val coroutineScope = rememberCoroutineScope()
 
     ExtendedFloatingActionButton(
