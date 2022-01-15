@@ -40,23 +40,22 @@ fun MapView(markers: List<MarkerOptions>) {
             CoroutineScope(Dispatchers.Main).launch {
 
                 // Load & setup map
-                val map = mapView.awaitMap()
+                mapView.awaitMap().apply {
 
-                // Disabled to not be covered by the FAB.
-                map.uiSettings.isZoomControlsEnabled = false
-                map.uiSettings.isMyLocationButtonEnabled = true
+                    // Disabled to not be covered by the FAB.
+                    uiSettings.isZoomControlsEnabled = false
+                    uiSettings.isMyLocationButtonEnabled = true
 
-                // Maybe these are also good.
-                // map.mapType = GoogleMap.MAP_TYPE_SATELLITE
-                // map.isTrafficEnabled = true
+                    // Maybe these are also good.
+                    // map.mapType = GoogleMap.MAP_TYPE_SATELLITE
+                    // map.isTrafficEnabled = true
 
-                // Draw markers.
-                markers.forEach { map.addMarker(it) }
+                    // Draw markers.
+                    markers.forEach { addMarker(it) }
 
-                // Set camera
-                map.moveCamera(
-                    CameraUpdateFactory.newLatLngZoom(markers.first().position, 14f)
-                )
+                    // Set camera
+                    moveCamera(CameraUpdateFactory.newLatLngZoom(markers.first().position, 14f))
+                }
             }
         }
     }
