@@ -2,23 +2,13 @@ package com.github.tscholze.duobahn.ui.components.map
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.AndroidView
-import com.github.tscholze.duobahn.R
-import com.github.tscholze.duobahn.ui.theme.AutobahnBlue
 import com.google.android.libraries.maps.CameraUpdateFactory
-import com.google.android.libraries.maps.model.LatLng
-import com.google.android.libraries.maps.model.Marker
 import com.google.android.libraries.maps.model.MarkerOptions
 import com.google.maps.android.ktx.awaitMap
 import kotlinx.coroutines.CoroutineScope
