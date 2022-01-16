@@ -60,7 +60,7 @@ This project has absolutely neither time line until it is production ready nor t
 ## Authors
 
 **Master of Desaster**
-- [Tobias (me)](([https://tscholze.github.io).)
+- [Tobias (me)](https://tscholze.github.io)
 
 **Awesome helping hands**
 - [Marcel](https://github.com/MarcelReiter)
