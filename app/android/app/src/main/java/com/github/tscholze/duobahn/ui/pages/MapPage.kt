@@ -12,13 +12,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.github.tscholze.duobahn.R
-import com.github.tscholze.duobahn.data.domain.models.toMarkerOptions
+import com.github.tscholze.duobahn.data.domain.models.toMarkerDefinition
 import com.github.tscholze.duobahn.data.network.repositories.UnprocessedDataRepository
 import com.github.tscholze.duobahn.ui.components.map.MapView
 import com.github.tscholze.duobahn.ui.theme.AutobahnBlue
@@ -53,7 +52,7 @@ fun MapPage(navController: NavController, repository: UnprocessedDataRepository 
                 markers = repository.getAutobahns()
                     .first()
                     .webcams
-                    .map { it.toMarkerOptions(LocalContext.current) }
+                    .map { it.toMarkerDefinition() }
             )
 
             // Z index: 1

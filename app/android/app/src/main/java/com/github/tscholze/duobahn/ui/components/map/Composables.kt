@@ -8,7 +8,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.viewinterop.AndroidView
+import com.github.tscholze.duobahn.R
+import com.github.tscholze.duobahn.data.domain.models.MarkerDefinition
 import com.google.android.libraries.maps.CameraUpdateFactory
+import com.google.android.libraries.maps.model.BitmapDescriptorFactory
 import com.google.android.libraries.maps.model.MarkerOptions
 import com.google.maps.android.ktx.awaitMap
 import kotlinx.coroutines.CoroutineScope
@@ -22,7 +25,7 @@ import kotlinx.coroutines.launch
  * TODO: Show marks, etc.
  */
 @Composable
-fun MapView(markers: List<MarkerOptions>) {
+fun MapView(markers: List<MarkerDefinition>) {
 
     // MARK: - State properties -
 
@@ -51,10 +54,18 @@ fun MapView(markers: List<MarkerOptions>) {
                     // map.isTrafficEnabled = true
 
                     // Draw markers.
-                    markers.forEach { addMarker(it) }
+                    markers.forEach {
+                        addMarker(
+                            MarkerOptions()
+                                .title(it.title)
+                                .snippet(it.snippet)
+                                .position(it.coordinate)
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_webcam))
+                        )
+                    }
 
                     // Set camera
-                    moveCamera(CameraUpdateFactory.newLatLngZoom(markers.first().position, 14f))
+                    moveCamera(CameraUpdateFactory.newLatLngZoom(markers.first().coordinate, 14f))
                 }
             }
         }

@@ -1,6 +1,5 @@
 package com.github.tscholze.duobahn.data.domain.models
 
-import com.google.android.libraries.maps.model.MarkerOptions
 import java.time.LocalDateTime
 
 // MARK: - Data -
@@ -32,11 +31,12 @@ data class Roadwork(
 /**
  * Maps the roadwork to a map marker.
  */
-fun Roadwork.toMarkerOptions(): MarkerOptions {
-    return MarkerOptions()
-        .title(name)
-        .position(coordinate.toLngLat())
-}
+fun Roadwork.toMarkerDefinition() =
+    MarkerDefinition(
+        title = name,
+        coordinate = coordinate.toLngLat(),
+        snippet = null,
+    )
 
 // MARK: - From Mapper -
 
