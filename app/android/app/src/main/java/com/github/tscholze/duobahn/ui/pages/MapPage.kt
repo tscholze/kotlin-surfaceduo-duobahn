@@ -51,8 +51,10 @@ fun MapPage(navController: NavController, repository: UnprocessedDataRepository 
             MapView(
                 markers = repository.getAutobahns()
                     .first()
-                    .webcams
-                    .map { it.toMarkerDefinition() }
+                    .let { autobahn ->
+                        autobahn.webcams.map { it.toMarkerDefinition() } +
+                                autobahn.roadworks.map { it.toMarkerDefinition() }
+                    }
             )
 
             // Z index: 1
