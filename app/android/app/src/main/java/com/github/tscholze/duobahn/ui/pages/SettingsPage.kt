@@ -1,6 +1,7 @@
 package com.github.tscholze.duobahn.ui.pages
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -26,6 +27,7 @@ fun SettingsPage(
         modifier = Modifier
             .verticalScroll(state = rememberScrollState())
             .padding(horizontal = 16.dp, vertical = 32.dp)
+            .heightIn(max = 500.dp)
     ) {
         Text(
             stringResource(R.string.settings_choose_autobahns_title),
