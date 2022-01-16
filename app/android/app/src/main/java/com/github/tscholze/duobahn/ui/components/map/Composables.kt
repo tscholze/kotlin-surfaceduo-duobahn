@@ -65,7 +65,7 @@ fun MapView(markers: List<MarkerDefinition>) {
                                 .icon(
                                     when (it.type) {
                                         WEBCAM -> BitmapDescriptorFactory.fromResource(R.drawable.ic_map_webcam)
-                                        ROADWORK -> BitmapDescriptorFactory.fromResource(R.drawable.ic_map_camera)
+                                        ROADWORK -> BitmapDescriptorFactory.fromResource(R.drawable.ic_map_roadwork)
                                     }
                                 )
                         )
