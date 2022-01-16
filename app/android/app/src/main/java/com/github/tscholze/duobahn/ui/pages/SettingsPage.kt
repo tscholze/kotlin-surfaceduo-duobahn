@@ -27,17 +27,21 @@ fun SettingsPage(
     Column(
         modifier = Modifier
             .verticalScroll(state = rememberScrollState())
-            .padding(horizontal = 16.dp, vertical = 32.dp)
+            .padding(top = 32.dp)
             .heightIn(max = 500.dp)
     ) {
         Text(
             stringResource(R.string.settings_choose_autobahns_title),
             fontWeight = FontWeight.Bold,
-            fontSize = 18.sp
+            fontSize = 18.sp,
+            modifier = Modifier.padding(horizontal = 16.dp)
         )
 
         FlowColumn(
-            modifier = Modifier.horizontalScroll(state = rememberScrollState())
+            modifier = Modifier
+                .horizontalScroll(state = rememberScrollState())
+                .padding(top = 8.dp, bottom = 16.dp)
+                .padding(horizontal = 16.dp)
         ) {
             repository.getAutobahns().map {
                 Chip(name = it.id)
