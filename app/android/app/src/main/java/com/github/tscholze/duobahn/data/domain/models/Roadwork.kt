@@ -1,5 +1,6 @@
 package com.github.tscholze.duobahn.data.domain.models
 
+import com.github.tscholze.duobahn.data.domain.models.MarkerDefinition.MarkerType.ROADWORK
 import java.time.LocalDateTime
 
 // MARK: - Data -
@@ -33,6 +34,7 @@ data class Roadwork(
  */
 fun Roadwork.toMarkerDefinition() =
     MarkerDefinition(
+        type = ROADWORK,
         title = name,
         coordinate = coordinate.toLngLat(),
         snippet = null,

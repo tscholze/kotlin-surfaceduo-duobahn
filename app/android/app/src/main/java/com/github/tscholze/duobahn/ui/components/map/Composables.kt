@@ -10,6 +10,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.viewinterop.AndroidView
 import com.github.tscholze.duobahn.R
 import com.github.tscholze.duobahn.data.domain.models.MarkerDefinition
+import com.github.tscholze.duobahn.data.domain.models.MarkerDefinition.MarkerType.ROADWORK
+import com.github.tscholze.duobahn.data.domain.models.MarkerDefinition.MarkerType.WEBCAM
 import com.google.android.libraries.maps.CameraUpdateFactory
 import com.google.android.libraries.maps.model.BitmapDescriptorFactory
 import com.google.android.libraries.maps.model.MarkerOptions
@@ -60,7 +62,12 @@ fun MapView(markers: List<MarkerDefinition>) {
                                 .title(it.title)
                                 .snippet(it.snippet)
                                 .position(it.coordinate)
-                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_webcam))
+                                .icon(
+                                    when (it.type) {
+                                        WEBCAM -> BitmapDescriptorFactory.fromResource(R.drawable.ic_map_webcam)
+                                        ROADWORK -> BitmapDescriptorFactory.fromResource(R.drawable.ic_map_camera)
+                                    }
+                                )
                         )
                     }
 

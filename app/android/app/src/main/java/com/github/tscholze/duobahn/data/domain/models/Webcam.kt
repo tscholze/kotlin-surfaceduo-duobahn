@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
+import com.github.tscholze.duobahn.data.domain.models.MarkerDefinition.MarkerType.WEBCAM
 import com.google.android.libraries.maps.model.BitmapDescriptorFactory
 import com.google.android.libraries.maps.model.MarkerOptions
 import java.net.URL
@@ -35,9 +36,10 @@ data class Webcam(
  */
 fun Webcam.toMarkerDefinition() =
     MarkerDefinition (
+        type = WEBCAM,
         title = name,
         snippet = direction,
-        coordinate = coordinate.toLngLat()
+        coordinate = coordinate.toLngLat(),
     )
 
 // MARK: - From Mapper -
