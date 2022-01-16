@@ -4,10 +4,8 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import androidx.annotation.DrawableRes
-import androidx.compose.ui.platform.LocalContext
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
-import com.github.tscholze.duobahn.R
+import com.github.tscholze.duobahn.data.domain.models.MarkerDefinition.MarkerType.WEBCAM
 import com.google.android.libraries.maps.model.BitmapDescriptorFactory
 import com.google.android.libraries.maps.model.MarkerOptions
 import java.net.URL
@@ -36,16 +34,13 @@ data class Webcam(
 /**
  * Maps model to marker.
  */
-fun Webcam.toMarkerOptions(context: Context): MarkerOptions {
-
-    return MarkerOptions()
-        .title(name)
-        .snippet(direction)
-        // .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_webcam))
-       // .icon(context, R.drawable.ic_map_webcam)
-       // .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
-        .position(coordinate.toLngLat())
-}
+fun Webcam.toMarkerDefinition() =
+    MarkerDefinition (
+        type = WEBCAM,
+        title = name,
+        snippet = direction,
+        coordinate = coordinate.toLngLat(),
+    )
 
 // MARK: - From Mapper -
 
