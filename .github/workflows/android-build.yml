@@ -19,9 +19,12 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         cache: gradle
+        
+    - name: Call xs into project directory 
+      run: cd app/android/
 
     - name: Grant execute permission for gradlew
-      run: chmod +x app/android/gradlew
+      run: chmod +x gradlew
       
     - name: Build with Gradle
-      run: app/android/gradlew build
+      run: gradlew build
