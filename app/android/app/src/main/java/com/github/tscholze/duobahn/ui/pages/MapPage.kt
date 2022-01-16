@@ -36,7 +36,7 @@ import org.koin.androidx.compose.get
 fun MapPage(navController: NavController, repository: UnprocessedDataRepository = get()) {
 
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
-        bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed)
+        bottomSheetState = rememberBottomSheetState(initialValue = BottomSheetValue.Collapsed)
     )
 
     BottomSheetScaffold(
