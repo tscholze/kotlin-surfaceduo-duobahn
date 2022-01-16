@@ -25,7 +25,7 @@ fun SettingsPage(
     Column(
         modifier = Modifier
             .verticalScroll(state = rememberScrollState())
-            .padding(16.dp, 32.dp, 16.dp, 32.dp)
+            .padding(horizontal = 16.dp, vertical = 32.dp)
     ) {
         Text(
             stringResource(R.string.settings_choose_autobahns_title),
