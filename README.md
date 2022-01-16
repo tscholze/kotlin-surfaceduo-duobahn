@@ -59,7 +59,12 @@ This project has absolutely neither time line until it is production ready nor t
 
 ## Authors
 
-At the moment, it is just me, [Tobi]([https://tscholze.github.io).
+**Master of Desaster**
+- [Tobias (me)](([https://tscholze.github.io).)
+
+**Awesome helping hands**
+- [Marcel](https://github.com/MarcelReiter)
+- [Mohammed](https://github.com/BFK78)
 
 ## Acknowledgments
 
