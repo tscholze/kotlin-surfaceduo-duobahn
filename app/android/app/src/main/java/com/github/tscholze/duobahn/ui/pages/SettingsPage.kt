@@ -1,10 +1,9 @@
 package com.github.tscholze.duobahn.ui.pages
 
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -22,14 +21,10 @@ import org.koin.androidx.compose.get
 fun SettingsPage(
     repository: UnprocessedDataRepository = get()
 ) {
-    val scrollState = rememberScrollState()
 
     Column(
         modifier = Modifier
-            .scrollable(
-                state = scrollState,
-                orientation = Orientation.Vertical
-            )
+            .verticalScroll(state = rememberScrollState())
             .padding(16.dp, 32.dp, 16.dp, 32.dp)
     ) {
         Text(
