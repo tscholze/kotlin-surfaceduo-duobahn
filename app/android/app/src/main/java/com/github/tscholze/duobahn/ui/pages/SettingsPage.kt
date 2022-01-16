@@ -1,5 +1,6 @@
 package com.github.tscholze.duobahn.ui.pages
 
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
@@ -35,7 +36,9 @@ fun SettingsPage(
             fontSize = 18.sp
         )
 
-        FlowColumn {
+        FlowColumn(
+            modifier = Modifier.horizontalScroll(state = rememberScrollState())
+        ) {
             repository.getAutobahns().map {
                 Chip(name = it.id)
             }
