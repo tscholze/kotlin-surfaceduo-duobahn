@@ -4,6 +4,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -11,10 +12,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.ExperimentalUnitApi
+import androidx.compose.ui.unit.dp
 import com.microsoft.device.dualscreen.twopanelayout.TwoPaneLayout
 import com.microsoft.device.dualscreen.twopanelayout.TwoPaneMode
 import com.microsoft.device.dualscreen.twopanelayout.navigateToPane1
 import com.microsoft.device.dualscreen.twopanelayout.navigateToPane2
+import com.microsoft.device.dualscreen.windowstate.WindowState
+import io.ktor.http.cio.websocket.*
+
 
 @ExperimentalAnimationApi
 @ExperimentalUnitApi
@@ -29,7 +34,7 @@ fun NavigationRailApp(windowState: WindowState) {
     val foldSize = windowState.foldSize.dp
 
     // Set up starting route for navigation in pane 1
-    var currentRoute by rememberSaveable { mutableStateOf(navDestinations[0].route) }
+    var currentRoute by rememberSaveable { mutableStateOf("navDestinations[0].route") }
     val updateRoute: (String) -> Unit = { newRoute -> currentRoute = newRoute }
 
     // Set up variable to store selected image id
@@ -67,7 +72,8 @@ fun Pane1(
     currentRoute: String,
     updateRoute: (String) -> Unit
 ) {
-    ShowWithNav(isDualScreen, isDualPortrait, imageId, updateImageId, currentRoute, updateRoute)
+    Text(text = "Pane1")
+    //ShowWithNav(isDualScreen, isDualPortrait, imageId, updateImageId, currentRoute, updateRoute)
 }
 
 @ExperimentalUnitApi
@@ -81,21 +87,5 @@ fun Pane2(
     updateImageId: (Int?) -> Unit,
     currentRoute: String,
 ) {
-    // Retrieve selected image information
-    val selectedImage = imageId?.let { DataProvider.getImage(imageId) }
-
-    // Set up back press action to return to pane 1 and clear image selection
-    val onBackPressed = {
-        navigateToPane1()
-        updateImageId(null)
-    }
-    BackHandler { if (!isDualPortrait) onBackPressed() }
-
-    ItemDetailView(isDualPortrait, isDualLandscape, foldSize, selectedImage, currentRoute)
-    // If only one pane is being displayed, show a "back" icon
-    if (!isDualPortrait) {
-        ItemTopBar(
-            onClick = { onBackPressed() }
-        )
-    }
+    Text(text = "Pane2")
 }
