@@ -3,45 +3,35 @@ package com.github.tscholze.duobahn
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import com.github.tscholze.duobahn.ui.pages.MapPage
-import com.github.tscholze.duobahn.ui.pages.PreparationPage
-import com.github.tscholze.duobahn.ui.pages.SettingsPage
+import androidx.compose.ui.unit.ExperimentalUnitApi
+import com.github.tscholze.duobahn.ui.components.structure.DuoBahnApp
 import com.github.tscholze.duobahn.ui.theme.DuoBahnTheme
+import com.microsoft.device.dualscreen.windowstate.WindowState
+import com.microsoft.device.dualscreen.windowstate.rememberWindowState
 
+@ExperimentalFoundationApi
+@ExperimentalUnitApi
+@ExperimentalAnimationApi
 @ExperimentalMaterialApi
 class MainActivity : ComponentActivity() {
+
+    // MARK: - Private properties -
+
+    private lateinit var windowState: WindowState
+
+    // MARK: - Life cycle -
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
+            windowState = rememberWindowState()
+
             DuoBahnTheme {
-                Surface(
-                    color = MaterialTheme.colors.background
-                ) {
-                    // State-safe navigation controller
-                    val navController = rememberNavController()
-
-                    // App-wide navigation host.
-                    NavHost(
-                        navController = navController,
-                        startDestination = "preparation"
-                    ) {
-                        // Preparation page.
-                        composable("preparation") { PreparationPage(navController) }
-
-                        // Map page.
-                        composable("map") { MapPage(navController) }
-
-                        // Settings page.
-                        composable("settings") { SettingsPage() }
-                    }
-                }
+                DuoBahnApp(windowState)
             }
         }
     }

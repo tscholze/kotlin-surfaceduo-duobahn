@@ -52,7 +52,7 @@ android {
 dependencies {
 
     var koin_version = "3.1.5"
-    var navigation_version = "2.4.0-alpha10"
+    var navigation_version = "2.4.0-rc01"
     var compose_version = "1.1.0-alpha06"
 
     // Android

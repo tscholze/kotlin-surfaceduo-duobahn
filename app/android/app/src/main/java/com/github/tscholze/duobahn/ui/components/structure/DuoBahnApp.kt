@@ -1,6 +1,5 @@
 package com.github.tscholze.duobahn.ui.components.structure
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
@@ -18,7 +17,6 @@ import com.microsoft.device.dualscreen.twopanelayout.TwoPaneMode
 import com.microsoft.device.dualscreen.twopanelayout.navigateToPane1
 import com.microsoft.device.dualscreen.twopanelayout.navigateToPane2
 import com.microsoft.device.dualscreen.windowstate.WindowState
-import io.ktor.http.cio.websocket.*
 
 
 @ExperimentalAnimationApi
@@ -26,7 +24,7 @@ import io.ktor.http.cio.websocket.*
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @Composable
-fun NavigationRailApp(windowState: WindowState) {
+fun DuoBahnApp(windowState: WindowState) {
     // Extract window state information
     val isDualScreen = windowState.isDualScreen()
     val isDualPortrait = windowState.isDualPortrait()
