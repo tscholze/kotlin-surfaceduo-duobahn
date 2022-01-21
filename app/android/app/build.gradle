@@ -13,7 +13,7 @@ android {
         minSdk 29
         targetSdk 31
         versionCode 1
-        versionName "1.0"
+        versionName "0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -52,21 +52,33 @@ android {
 dependencies {
 
     var koin_version = "3.1.5"
+    var navigation_version = "2.4.0-alpha10"
+    var compose_version = "1.1.0-alpha06"
 
+    // Android
+    implementation "androidx.compose.material:material:"
+    implementation "androidx.navigation:navigation-compose:$navigation_version"
     implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.0'
-    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation "androidx.compose.ui:ui:$compose_version"
-    implementation "androidx.compose.material:material:$compose_version"
-    implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
-    implementation "androidx.navigation:navigation-compose:2.4.0-rc01"
+    implementation "androidx.compose.material:material"
+    implementation "androidx.compose.ui:ui-tooling-preview"
+    implementation "androidx.navigation:navigation-compose"
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'
     implementation 'androidx.activity:activity-compose:1.4.0'
+
+    // Google
+    implementation 'com.google.android.material:material:1.5.0'
+
+    // JetBrains
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0'
 
     // Flow layout
-    implementation "com.google.accompanist:accompanist-flowlayout:0.22.0-rc"
+    implementation 'com.google.accompanist:accompanist-flowlayout:0.22.0-rc'
 
+    // Microsoft
+    implementation 'com.microsoft.device.dualscreen:twopanelayout:1.0.0-alpha06'
+    implementation 'com.microsoft.device.dualscreen:windowstate:1.0.0-alpha1'
 
     // Ktor
     implementation("io.ktor:ktor-client-core:1.6.7")
@@ -76,6 +88,7 @@ dependencies {
     // Koin
     implementation "io.insert-koin:koin-android:$koin_version"
     implementation "io.insert-koin:koin-androidx-compose:$koin_version"
+
     // Map
     implementation("com.google.android.libraries.maps:maps:3.1.0-beta")
     implementation("com.google.maps.android:maps-v3-ktx:2.2.0")
