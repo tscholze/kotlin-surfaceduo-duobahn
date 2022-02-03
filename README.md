@@ -73,7 +73,7 @@ This project has absolutely neither time line until it is production ready nor t
 * [Open Data Autobahn API](https://autobahn.api.bund.dev/)
 * [Surface Duo SDK Technet Community](https://techcommunity.microsoft.com/t5/surface-duo-sdk/bd-p/SurfaceDuoSDK) for helping beginners, too.
 * [Figma file](https://www.figma.com/file/0FmgLalxKVoayn4bwRcqVx/autobahn?node-id=0%3A1) with rough ui ideas
-* [Autobahn routes on maps](https://commons.wikimedia.org/wiki/File:Map_D_A5.svg) provided by [NordNordWest](https://commons.wikimedia.org/wiki/User:NordNordWest) and [Lencer](https://commons.wikimedia.org/wiki/User:Lencer)
+* [Autobahn routes on maps](https://de.wikipedia.org/wiki/Liste_der_Bundesautobahnen_in_Deutschland) provided by [NordNordWest](https://commons.wikimedia.org/wiki/User:NordNordWest) and [Lencer](https://commons.wikimedia.org/wiki/User:Lencer)
 
 ## License
 
