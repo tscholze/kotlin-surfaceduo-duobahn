@@ -65,6 +65,7 @@ This project has absolutely neither time line until it is production ready nor t
 **Awesome helping hands**
 - [Marcel](https://github.com/MarcelReiter)
 - [Carlo](https://github.com/CLucera)
+- [Klaus](https://github.com/klausmeyer)
 - [Mohammed](https://github.com/BFK78)
 
 ## Acknowledgments
