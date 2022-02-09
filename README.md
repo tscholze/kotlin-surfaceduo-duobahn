@@ -7,7 +7,7 @@
 
 |Service|Status|
 |-------|------|
-|GitHub| - |
+|GitHub| [![android-build](https://github.com/tscholze/kotlin-surfaceduo-duobahn/actions/workflows/android-build.yml/badge.svg)](https://github.com/tscholze/kotlin-surfaceduo-duobahn/actions/workflows/android-build.yml) |
 
 ## Idea
 
