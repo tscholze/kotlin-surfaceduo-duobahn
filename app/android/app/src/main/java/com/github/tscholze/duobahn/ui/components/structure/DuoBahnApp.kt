@@ -2,20 +2,20 @@ package com.github.tscholze.duobahn.ui.components.structure
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.ExperimentalUnitApi
-import androidx.compose.ui.unit.dp
-import com.microsoft.device.dualscreen.twopanelayout.TwoPaneLayout
-import com.microsoft.device.dualscreen.twopanelayout.TwoPaneMode
-import com.microsoft.device.dualscreen.twopanelayout.navigateToPane1
-import com.microsoft.device.dualscreen.twopanelayout.navigateToPane2
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.github.tscholze.duobahn.ui.pages.MapPage
+import com.github.tscholze.duobahn.ui.pages.PreparationPage
+import com.github.tscholze.duobahn.ui.pages.SettingsPage
 import com.microsoft.device.dualscreen.windowstate.WindowState
 
 
@@ -25,6 +25,28 @@ import com.microsoft.device.dualscreen.windowstate.WindowState
 @ExperimentalFoundationApi
 @Composable
 fun DuoBahnApp(windowState: WindowState) {
+
+    // Create app-wide navigation controller.
+    val navController = rememberNavController()
+
+    // Foundation layer of the app.
+    Box(modifier = Modifier.fillMaxSize()) {
+        NavHost(
+            navController = navController,
+            startDestination = "preparation"
+        ) {
+            // Preparation page.
+            composable("preparation") { PreparationPage(navController) }
+
+            // Map page.
+            composable("map") { MapPage(navController) }
+
+            // Settings page.
+            composable("settings") { SettingsPage() }
+        }
+    }
+
+    /*
     // Extract window state information
     val isDualScreen = windowState.isDualScreen()
     val isDualPortrait = windowState.isDualPortrait()
@@ -55,7 +77,7 @@ fun DuoBahnApp(windowState: WindowState) {
             navigateToPane2()
         else
             navigateToPane1()
-    }
+    }*/
 }
 
 @ExperimentalAnimationApi
