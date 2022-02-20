@@ -22,7 +22,6 @@ private val LightColorPalette = lightColors(
 )
 
 private val DarkColorPalette = darkColors(
-
     primary = md_theme_dark_primary,
     onPrimary = md_theme_dark_onPrimary,
     secondary = md_theme_dark_secondary,
@@ -38,8 +37,9 @@ private val DarkColorPalette = darkColors(
 // MARK: - Composable elements -
 
 /**
- * Gets the app's theme.
- * It supports light and dark theme.
+ * App's theme.
+ *
+ * @param content Content container.
  */
 @Composable
 fun DuoBahnTheme(

@@ -1,12 +1,12 @@
 package com.github.tscholze.duobahn.ui.pages
 
-import android.annotation.SuppressLint
-import android.os.CountDownTimer
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -15,7 +15,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.github.tscholze.duobahn.R
-import com.github.tscholze.duobahn.data.network.dto.Autobahn
 import com.github.tscholze.duobahn.data.network.repositories.UnprocessedDataRepository
 import com.github.tscholze.duobahn.ui.theme.AutobahnBlue
 import kotlinx.coroutines.launch
@@ -31,9 +30,11 @@ import org.koin.androidx.compose.get
 @Composable
 fun PreparationPage(navController: NavController, repository: UnprocessedDataRepository = get()) {
 
-    val coroutineScope = rememberCoroutineScope()
-    val autobahns = remember { mutableListOf<Autobahn>() }
+    // MARK: - Properties -
 
+    val coroutineScope = rememberCoroutineScope()
+
+    // MARK: - Effects -
 
     LaunchedEffect(navController, repository) {
         coroutineScope.launch {
@@ -41,12 +42,12 @@ fun PreparationPage(navController: NavController, repository: UnprocessedDataRep
         }
     }
 
+    // MARK: - Content -
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
-        modifier = Modifier
-            .fillMaxSize()
-
+        modifier = Modifier.fillMaxSize()
     ) {
         // Logo
         Image(
@@ -65,8 +66,4 @@ fun PreparationPage(navController: NavController, repository: UnprocessedDataRep
         // Loading text.
         Text("Preparing app data set. Please be patient.")
     }
-}
-
-private fun requestData(navController: NavController) {
-
 }

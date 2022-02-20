@@ -34,9 +34,13 @@ import org.koin.androidx.compose.get
 @ExperimentalMaterialApi
 fun MapPage(navController: NavController, repository: UnprocessedDataRepository = get()) {
 
+    // MARK: - Properties -
+
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = rememberBottomSheetState(initialValue = BottomSheetValue.Collapsed)
     )
+
+    // MARK: - Content -
 
     BottomSheetScaffold(
         scaffoldState = bottomSheetScaffoldState,
