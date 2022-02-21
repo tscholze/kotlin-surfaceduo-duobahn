@@ -32,13 +32,26 @@ import org.koin.androidx.compose.get
 @Composable
 @ExperimentalMaterialApi
 fun MapPage(navController: NavController, repository: UnprocessedDataRepository = get()) {
+    val coroutineScope = rememberCoroutineScope()
 
     //TODO the viewModel/repository might expose this as a flow, so we can collectAsState() here
     val autobahn by remember { mutableStateOf(repository.getAutobahns().first()) }
 
+    val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
+        bottomSheetState = rememberBottomSheetState(initialValue = BottomSheetValue.Collapsed)
+    )
+
     MapPage(
         markers = autobahn.webcams.map { it.toMarkerDefinition() } +
                 autobahn.roadworks.map { it.toMarkerDefinition() },
+        bottomSheetScaffoldState = bottomSheetScaffoldState,
+        onFabClick = {
+            coroutineScope.launch {
+                with(bottomSheetScaffoldState.bottomSheetState) {
+                    if (isCollapsed) expand() else collapse()
+                }
+            }
+        }
     )
 }
 
@@ -46,6 +59,8 @@ fun MapPage(navController: NavController, repository: UnprocessedDataRepository 
 /**
  * Low level version of MapPage:
  * Working on lists and lambdas -> easy to test & understand
+ * The compose part is also stateless: state is hoisted in the top-level-wrapper.
+ * (This is not true for the non-compose MapView)
  *
  * A map page contains the map itself and its controlling elements.
  */
@@ -53,22 +68,18 @@ fun MapPage(navController: NavController, repository: UnprocessedDataRepository 
 @ExperimentalMaterialApi
 fun MapPage(
     markers: List<MarkerDefinition>,
+    bottomSheetScaffoldState: BottomSheetScaffoldState,
+    onFabClick: () -> Unit,
 ) {
-
     // MARK: - Properties -
 
-    val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
-        bottomSheetState = rememberBottomSheetState(initialValue = BottomSheetValue.Collapsed)
-    )
-
     // MARK: - Content -
-
     BottomSheetScaffold(
         scaffoldState = bottomSheetScaffoldState,
         sheetContent = { SettingsPage() },
         sheetPeekHeight = 32.dp,
         floatingActionButton = {
-            MapContentFloatingActionButton(bottomSheetScaffoldState)
+            MapContentFloatingActionButton(onClick = onFabClick)
         }
     ) {
         Box {
@@ -92,25 +103,12 @@ fun MapPage(
 
 @ExperimentalMaterialApi
 @Composable
-private fun MapContentFloatingActionButton(
-    state: BottomSheetScaffoldState
-) {
-    val coroutineScope = rememberCoroutineScope()
-
+private fun MapContentFloatingActionButton(onClick: () -> Unit) {
     ExtendedFloatingActionButton(
         text = { Text(text = stringResource(R.string.map_fab_title)) },
         contentColor = Color.White,
         backgroundColor = AutobahnBlue,
-        onClick = {
-            val bottomSheetState = state.bottomSheetState
-            coroutineScope.launch {
-                if (bottomSheetState.isCollapsed) {
-                    bottomSheetState.expand()
-                } else {
-                    bottomSheetState.collapse()
-                }
-            }
-        },
+        onClick = onClick,
         icon = {
             Icon(
                 Icons.Default.Settings,
