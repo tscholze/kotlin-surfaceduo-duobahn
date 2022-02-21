@@ -7,8 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -17,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.github.tscholze.duobahn.R
+import com.github.tscholze.duobahn.data.domain.models.MarkerDefinition
 import com.github.tscholze.duobahn.data.domain.models.toMarkerDefinition
 import com.github.tscholze.duobahn.data.network.repositories.UnprocessedDataRepository
 import com.github.tscholze.duobahn.ui.components.map.MapView
@@ -24,15 +24,36 @@ import com.github.tscholze.duobahn.ui.theme.AutobahnBlue
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.get
 
-
 /**
- * A map page contains the map itself and its controlling elements.
+ * High level version of MapPage
  *
  * @param navController: App-wide navigation controller.
  */
 @Composable
 @ExperimentalMaterialApi
 fun MapPage(navController: NavController, repository: UnprocessedDataRepository = get()) {
+
+    //TODO the viewModel/repository might expose this as a flow, so we can collectAsState() here
+    val autobahn by remember { mutableStateOf(repository.getAutobahns().first()) }
+
+    MapPage(
+        markers = autobahn.webcams.map { it.toMarkerDefinition() } +
+                autobahn.roadworks.map { it.toMarkerDefinition() },
+    )
+}
+
+
+/**
+ * Low level version of MapPage:
+ * Working on lists and lambdas -> easy to test & understand
+ *
+ * A map page contains the map itself and its controlling elements.
+ */
+@Composable
+@ExperimentalMaterialApi
+fun MapPage(
+    markers: List<MarkerDefinition>,
+) {
 
     // MARK: - Properties -
 
@@ -52,14 +73,7 @@ fun MapPage(navController: NavController, repository: UnprocessedDataRepository 
     ) {
         Box {
             // Z index: 0
-            MapView(
-                markers = repository.getAutobahns()
-                    .first()
-                    .let { autobahn ->
-                        autobahn.webcams.map { it.toMarkerDefinition() } +
-                                autobahn.roadworks.map { it.toMarkerDefinition() }
-                    }
-            )
+            MapView(markers = markers)
 
             // Z index: 1
             Text(
