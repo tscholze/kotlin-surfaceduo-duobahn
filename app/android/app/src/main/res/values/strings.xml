@@ -4,4 +4,7 @@
     <string name="app_disclaimer">This is an educational app, not meant for production. See "help" for more.</string>
     <string name="misc_logo_description">DuoBahn logo</string>
     <string name="settings_choose_autobahns_title">Wähle bis zu 3 Autobahnen</string>
+    <string name="open_in_maps">In Maps öffnen</string>
+    <string name="open_web">Webseite öffnen</string>
+    <string name="webcam_id">Webcam ID: %s</string>
 </resources>

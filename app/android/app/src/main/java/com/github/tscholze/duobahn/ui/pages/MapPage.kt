@@ -1,5 +1,6 @@
 package com.github.tscholze.duobahn.ui.pages
 
+import android.widget.Toast
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -12,6 +13,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -24,6 +27,7 @@ import com.github.tscholze.duobahn.ui.components.map.MapView
 import com.github.tscholze.duobahn.ui.theme.AutobahnBlue
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.get
+import java.net.URL
 
 /**
  * High level version of MapPage
@@ -35,6 +39,7 @@ import org.koin.androidx.compose.get
 @Composable
 fun MapPage(navController: NavController, repository: UnprocessedDataRepository = get()) {
     val coroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     //TODO the viewModel/repository might expose this as a flow, so we can collectAsState() here
     val autobahn by remember { mutableStateOf(repository.getAutobahns().first()) }
@@ -59,6 +64,8 @@ fun MapPage(navController: NavController, repository: UnprocessedDataRepository 
         },
         onMapClick = { currentMarker = it },
         currentMarker = currentMarker,
+        openInMaps = { Toast.makeText(context, "TODO: open maps", Toast.LENGTH_SHORT).show()},
+        openWeb = { Toast.makeText(context, "TODO: open web", Toast.LENGTH_SHORT).show()}
     )
 }
 
@@ -79,6 +86,8 @@ fun MapPage(
     bottomSheetScaffoldState: BottomSheetScaffoldState,
     onFabClick: () -> Unit,
     onMapClick: (MarkerDefinition?) -> Unit,
+    openInMaps: (MarkerDefinition) -> Unit,
+    openWeb: (URL) -> Unit,
     currentMarker: MarkerDefinition?
 ) {
     // MARK: - Properties -
@@ -102,7 +111,9 @@ fun MapPage(
             // Z index 1
             MapOverlay(
                 marker = currentMarker,
-                modifier = Modifier.padding(32.dp)
+                modifier = Modifier.padding(32.dp),
+                openInMaps = openInMaps,
+                openWeb = openWeb,
             )
 
             // Z index: 2
