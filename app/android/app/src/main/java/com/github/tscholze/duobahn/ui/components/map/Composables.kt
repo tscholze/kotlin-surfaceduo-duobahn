@@ -1,10 +1,14 @@
 package com.github.tscholze.duobahn.ui.components.map
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import com.github.tscholze.duobahn.data.domain.models.MarkerDefinition
+import com.google.android.gms.maps.GoogleMapOptions
 import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.MapProperties
+import com.google.maps.android.compose.MapType
+import com.google.maps.android.compose.MapUiSettings
 
 
 /**
@@ -24,6 +28,18 @@ fun MapView(markers: List<MarkerDefinition>) {
 
     GoogleMap(
         modifier = Modifier.fillMaxSize(),
+        properties = MapProperties(
+            // Maybe these are also good.
+            //  mapType = MapType.SATELLITE,
+            // isTrafficEnabled = true
+        ),
+        uiSettings = MapUiSettings(
+            // Disabled to not be covered by the FAB.
+            zoomControlsEnabled = false,
+            myLocationButtonEnabled = true,
+            // Maybe these are also good.
+            //compassEnabled = true,
+        )
     )
 
     /*
@@ -38,14 +54,6 @@ fun MapView(markers: List<MarkerDefinition>) {
 
                 // Load & setup map
                 mapView.awaitMap().apply {
-
-                    // Disabled to not be covered by the FAB.
-                    uiSettings.isZoomControlsEnabled = false
-                    uiSettings.isMyLocationButtonEnabled = true
-
-                    // Maybe these are also good.
-                    // map.mapType = GoogleMap.MAP_TYPE_SATELLITE
-                    // map.isTrafficEnabled = true
 
                     // Draw markers.
                     markers.forEach {
