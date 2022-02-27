@@ -7,4 +7,5 @@
     <string name="open_in_maps">In Maps öffnen</string>
     <string name="open_web">Webseite öffnen</string>
     <string name="webcam_id">Webcam ID: %s</string>
+    <string name="generic_error">Ups! Da ist wohl etwas schief gelaufen</string>
 </resources>

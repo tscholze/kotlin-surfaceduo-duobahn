@@ -74,7 +74,18 @@ fun MapPage(navController: NavController, repository: UnprocessedDataRepository 
             ).apply { setPackage("com.google.android.apps.maps") }
             context.startActivity(mapIntent)
         },
-        openWeb = { Toast.makeText(context, "TODO: open web", Toast.LENGTH_SHORT).show()}
+        openWeb = {
+            // from https://stackoverflow.com/a/9662990/12871582
+            // TODO this feels not elegant - maybe we shouldn't use java.net.URL in our domain model?
+            try {
+                val webIntent = Intent(Intent.ACTION_VIEW).apply {
+                    data = Uri.parse(it.toURI().toString())
+                }
+                context.startActivity(webIntent)
+            } catch (e: Throwable) {
+                Toast.makeText(context, context.getString(R.string.generic_error), Toast.LENGTH_SHORT).show()
+            }
+        }
     )
 }
 
