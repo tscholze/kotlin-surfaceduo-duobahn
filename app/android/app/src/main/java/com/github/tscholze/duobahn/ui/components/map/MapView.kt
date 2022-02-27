@@ -4,9 +4,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.github.tscholze.duobahn.R
-import com.github.tscholze.duobahn.data.domain.models.MarkerDefinition
-import com.github.tscholze.duobahn.data.domain.models.MarkerDefinition.MarkerType.ROADWORK
-import com.github.tscholze.duobahn.data.domain.models.MarkerDefinition.MarkerType.WEBCAM
+import com.github.tscholze.duobahn.data.domain.models.*
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.maps.android.compose.*
@@ -30,7 +28,7 @@ fun MapView(
 
     // Observing and controlling the camera's state can be done with a CameraPositionState
     val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(markers.first().coordinate, 11f)
+        position = CameraPosition.fromLatLngZoom(markers.first().coordinate.toLngLat(), 11f)
     }
 
     // MARK: - UI -
@@ -54,10 +52,11 @@ fun MapView(
     ) {
         markers.forEach { markerDefinition ->
             Marker(
-                position = markerDefinition.coordinate,
-                icon = when (markerDefinition.type) {
-                    WEBCAM -> BitmapDescriptorFactory.fromResource(R.drawable.ic_map_webcam)
-                    ROADWORK -> BitmapDescriptorFactory.fromResource(R.drawable.ic_map_roadwork)
+                position = markerDefinition.coordinate.toLngLat(),
+                icon = when (markerDefinition) {
+                    is Webcam -> BitmapDescriptorFactory.fromResource(R.drawable.ic_map_webcam)
+                    is Roadwork -> BitmapDescriptorFactory.fromResource(R.drawable.ic_map_roadwork)
+                    else -> throw NoWhenBranchMatchedException("Please define me!")
                 },
                 onClick = {
                     onMapClick(markerDefinition);

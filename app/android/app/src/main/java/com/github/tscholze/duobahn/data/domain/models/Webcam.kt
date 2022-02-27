@@ -5,7 +5,6 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
-import com.github.tscholze.duobahn.data.domain.models.MarkerDefinition.MarkerType.WEBCAM
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.MarkerOptions
 import java.net.URL
@@ -14,7 +13,7 @@ import java.net.URL
  * Represents a webcam.
  *
  * @property id Unique identifier.
- * @property name Human-readable name of the roadwork.
+ * @property title Human-readable name of the roadwork.
  * @property direction Point of view direction
  * @property coordinate Location of webcam
  * @property thumbnailURL Url to the current thumbnail
@@ -22,25 +21,12 @@ import java.net.URL
  */
 data class Webcam(
     val id: String,
-    val name: String,
+    override val title: String,
     val direction: String,
-    val coordinate: Coordinate,
+    override val coordinate: Coordinate,
     val thumbnailURL: URL?,
     val linkURL: URL?
-)
-
-// MARK: - To Mapper -
-
-/**
- * Maps model to marker.
- */
-fun Webcam.toMarkerDefinition() =
-    MarkerDefinition (
-        type = WEBCAM,
-        title = name,
-        snippet = direction,
-        coordinate = coordinate.toLngLat(),
-    )
+): MarkerDefinition
 
 // MARK: - From Mapper -
 
@@ -56,7 +42,7 @@ fun com.github.tscholze.duobahn.data.network.dto.Webcam.toModel(): Webcam {
 
     return Webcam(
         id = identifier,
-        name = title,
+        title = title,
         direction = subtitle,
         coordinate = coordinate.toModel(),
         thumbnailURL = thumbnailURL,

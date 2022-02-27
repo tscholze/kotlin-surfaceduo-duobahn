@@ -18,7 +18,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.github.tscholze.duobahn.R
 import com.github.tscholze.duobahn.data.domain.models.MarkerDefinition
-import com.github.tscholze.duobahn.data.domain.models.toMarkerDefinition
 import com.github.tscholze.duobahn.data.network.repositories.UnprocessedDataRepository
 import com.github.tscholze.duobahn.ui.components.map.MapOverlay
 import com.github.tscholze.duobahn.ui.components.map.MapView
@@ -49,8 +48,7 @@ fun MapPage(navController: NavController, repository: UnprocessedDataRepository 
     }
 
     MapPage(
-        markers = autobahn.webcams.map { it.toMarkerDefinition() } +
-                autobahn.roadworks.map { it.toMarkerDefinition() },
+        markers = autobahn.webcams + autobahn.roadworks,
         bottomSheetScaffoldState = bottomSheetScaffoldState,
         onFabClick = {
             coroutineScope.launch {
