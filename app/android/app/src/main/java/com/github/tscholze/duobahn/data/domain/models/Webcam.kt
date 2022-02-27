@@ -25,6 +25,7 @@ data class Webcam(
     val direction: String,
     override val coordinate: Coordinate,
     val thumbnailURL: URL?,
+    val thumbnailUrlString: String,
     val linkURL: URL?
 ): MarkerDefinition
 
@@ -46,6 +47,7 @@ fun com.github.tscholze.duobahn.data.network.dto.Webcam.toModel(): Webcam {
         direction = subtitle,
         coordinate = coordinate.toModel(),
         thumbnailURL = thumbnailURL,
+        thumbnailUrlString = imageurl,
         linkURL = linkURL
     )
 }
