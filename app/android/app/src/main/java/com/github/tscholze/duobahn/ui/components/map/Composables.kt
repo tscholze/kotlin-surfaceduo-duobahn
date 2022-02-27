@@ -1,28 +1,17 @@
 package com.github.tscholze.duobahn.ui.components.map
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.viewinterop.AndroidView
-import com.github.tscholze.duobahn.R
 import com.github.tscholze.duobahn.data.domain.models.MarkerDefinition
-import com.github.tscholze.duobahn.data.domain.models.MarkerDefinition.MarkerType.ROADWORK
-import com.github.tscholze.duobahn.data.domain.models.MarkerDefinition.MarkerType.WEBCAM
-import com.google.android.libraries.maps.CameraUpdateFactory
-import com.google.android.libraries.maps.model.BitmapDescriptorFactory
-import com.google.android.libraries.maps.model.MarkerOptions
-import com.google.maps.android.ktx.awaitMap
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.google.maps.android.compose.GoogleMap
 
 
 /**
  * Composes a map view.
+ *
+ * to get started with this component, it's best to look at the official compose map docs:
+ * https://github.com/googlemaps/android-maps-compose and their sample app
  *
  * TODO: Show marks, etc.
  */
@@ -31,10 +20,13 @@ fun MapView(markers: List<MarkerDefinition>) {
 
     // MARK: - State properties -
 
-    val mapView = rememberMapViewWithLifecycle()
-
     // MARK: - UI -
 
+    GoogleMap(
+        modifier = Modifier.fillMaxSize(),
+    )
+
+    /*
     Column(
         modifier = Modifier
             .fillMaxHeight()
@@ -76,5 +68,5 @@ fun MapView(markers: List<MarkerDefinition>) {
                 }
             }
         }
-    }
+    }*/
 }

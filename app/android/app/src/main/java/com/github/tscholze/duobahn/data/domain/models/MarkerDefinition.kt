@@ -1,6 +1,6 @@
 package com.github.tscholze.duobahn.data.domain.models
 
-import com.google.android.libraries.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLng
 
 // TODO is this really a domain model?
 

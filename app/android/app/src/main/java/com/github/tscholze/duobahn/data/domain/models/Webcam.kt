@@ -6,8 +6,8 @@ import android.graphics.Canvas
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import com.github.tscholze.duobahn.data.domain.models.MarkerDefinition.MarkerType.WEBCAM
-import com.google.android.libraries.maps.model.BitmapDescriptorFactory
-import com.google.android.libraries.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.MarkerOptions
 import java.net.URL
 
 /**
