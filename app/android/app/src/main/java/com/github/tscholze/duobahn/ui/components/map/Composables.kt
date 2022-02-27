@@ -5,10 +5,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import com.github.tscholze.duobahn.data.domain.models.MarkerDefinition
 import com.google.android.gms.maps.GoogleMapOptions
-import com.google.maps.android.compose.GoogleMap
-import com.google.maps.android.compose.MapProperties
-import com.google.maps.android.compose.MapType
-import com.google.maps.android.compose.MapUiSettings
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.maps.android.compose.*
 
 
 /**
@@ -23,6 +21,11 @@ import com.google.maps.android.compose.MapUiSettings
 fun MapView(markers: List<MarkerDefinition>) {
 
     // MARK: - State properties -
+
+    // Observing and controlling the camera's state can be done with a CameraPositionState
+    val cameraPositionState = rememberCameraPositionState {
+        position = CameraPosition.fromLatLngZoom(markers.first().coordinate, 11f)
+    }
 
     // MARK: - UI -
 
@@ -39,7 +42,8 @@ fun MapView(markers: List<MarkerDefinition>) {
             myLocationButtonEnabled = true,
             // Maybe these are also good.
             //compassEnabled = true,
-        )
+        ),
+        cameraPositionState = cameraPositionState,
     )
 
     /*
@@ -70,9 +74,6 @@ fun MapView(markers: List<MarkerDefinition>) {
                                 )
                         )
                     }
-
-                    // Set camera
-                    moveCamera(CameraUpdateFactory.newLatLngZoom(markers.first().coordinate, 14f))
                 }
             }
         }
