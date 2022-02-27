@@ -1,5 +1,7 @@
 package com.github.tscholze.duobahn.ui.pages
 
+import android.content.Intent
+import android.net.Uri
 import android.widget.Toast
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
@@ -13,7 +15,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -28,6 +29,7 @@ import com.github.tscholze.duobahn.ui.theme.AutobahnBlue
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.get
 import java.net.URL
+
 
 /**
  * High level version of MapPage
@@ -64,7 +66,14 @@ fun MapPage(navController: NavController, repository: UnprocessedDataRepository 
         },
         onMapClick = { currentMarker = it },
         currentMarker = currentMarker,
-        openInMaps = { Toast.makeText(context, "TODO: open maps", Toast.LENGTH_SHORT).show()},
+        openInMaps = {
+            // from https://stackoverflow.com/a/39444675/12871582
+            val mapIntent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("geo:0,0?q=${it.latLng.latitude},${it.latLng.longitude}(${it.title}))")
+            ).apply { setPackage("com.google.android.apps.maps") }
+            context.startActivity(mapIntent)
+        },
         openWeb = { Toast.makeText(context, "TODO: open web", Toast.LENGTH_SHORT).show()}
     )
 }
