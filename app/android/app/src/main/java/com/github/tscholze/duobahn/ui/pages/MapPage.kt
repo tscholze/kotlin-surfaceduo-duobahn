@@ -1,5 +1,6 @@
 package com.github.tscholze.duobahn.ui.pages
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,6 +20,7 @@ import com.github.tscholze.duobahn.R
 import com.github.tscholze.duobahn.data.domain.models.MarkerDefinition
 import com.github.tscholze.duobahn.data.domain.models.toMarkerDefinition
 import com.github.tscholze.duobahn.data.network.repositories.UnprocessedDataRepository
+import com.github.tscholze.duobahn.ui.components.map.MapOverlay
 import com.github.tscholze.duobahn.ui.components.map.MapView
 import com.github.tscholze.duobahn.ui.theme.AutobahnBlue
 import kotlinx.coroutines.launch
@@ -29,8 +31,9 @@ import org.koin.androidx.compose.get
  *
  * @param navController: App-wide navigation controller.
  */
-@Composable
+@ExperimentalAnimationApi
 @ExperimentalMaterialApi
+@Composable
 fun MapPage(navController: NavController, repository: UnprocessedDataRepository = get()) {
     val coroutineScope = rememberCoroutineScope()
 
@@ -40,6 +43,10 @@ fun MapPage(navController: NavController, repository: UnprocessedDataRepository 
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = rememberBottomSheetState(initialValue = BottomSheetValue.Collapsed)
     )
+
+    var currentMarker by remember {
+        mutableStateOf<MarkerDefinition?>(null)
+    }
 
     MapPage(
         markers = autobahn.webcams.map { it.toMarkerDefinition() } +
@@ -51,7 +58,9 @@ fun MapPage(navController: NavController, repository: UnprocessedDataRepository 
                     if (isCollapsed) expand() else collapse()
                 }
             }
-        }
+        },
+        onMapClick = { currentMarker = it },
+        currentMarker = currentMarker,
     )
 }
 
@@ -64,12 +73,15 @@ fun MapPage(navController: NavController, repository: UnprocessedDataRepository 
  *
  * A map page contains the map itself and its controlling elements.
  */
-@Composable
+@ExperimentalAnimationApi
 @ExperimentalMaterialApi
+@Composable
 fun MapPage(
     markers: List<MarkerDefinition>,
     bottomSheetScaffoldState: BottomSheetScaffoldState,
     onFabClick: () -> Unit,
+    onMapClick: (MarkerDefinition?) -> Unit,
+    currentMarker: MarkerDefinition?
 ) {
     // MARK: - Properties -
 
@@ -84,9 +96,18 @@ fun MapPage(
     ) {
         Box {
             // Z index: 0
-            MapView(markers = markers)
+            MapView(
+                markers = markers,
+                onMapClick = onMapClick
+            )
 
-            // Z index: 1
+            // Z index 1
+            MapOverlay(
+                marker = currentMarker,
+                modifier = Modifier.padding(32.dp)
+            )
+
+            // Z index: 2
             Text(
                 stringResource(R.string.app_disclaimer),
                 fontSize = 8.sp,

@@ -21,7 +21,10 @@ import com.google.maps.android.compose.*
  * TODO: Show marks, etc.
  */
 @Composable
-fun MapView(markers: List<MarkerDefinition>) {
+fun MapView(
+    markers: List<MarkerDefinition>,
+    onMapClick: (MarkerDefinition?) -> Unit,
+) {
 
     // MARK: - State properties -
 
@@ -47,15 +50,22 @@ fun MapView(markers: List<MarkerDefinition>) {
             //compassEnabled = true,
         ),
         cameraPositionState = cameraPositionState,
+        onMapClick = { onMapClick(null) }
     ) {
-        markers.forEach {
+        markers.forEach { markerDefinition ->
             Marker(
-                title = it.title,
-                snippet = it.snippet,
-                position = it.coordinate,
-                icon = when (it.type) {
+                position = markerDefinition.coordinate,
+                icon = when (markerDefinition.type) {
                     WEBCAM -> BitmapDescriptorFactory.fromResource(R.drawable.ic_map_webcam)
                     ROADWORK -> BitmapDescriptorFactory.fromResource(R.drawable.ic_map_roadwork)
+                },
+                onClick = {
+                    onMapClick(markerDefinition);
+
+                    // returning false here allows the standard onClick to proceed:
+                    // - centering the map
+                    // - showing an infoWindow. This is not visible tho, since marker title / snippet is not set
+                    false
                 }
             )
         }
