@@ -1,10 +1,13 @@
 package com.github.tscholze.duobahn.ui.components.map
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.github.tscholze.duobahn.R
 import com.github.tscholze.duobahn.data.domain.models.MarkerDefinition
-import com.google.android.gms.maps.GoogleMapOptions
+import com.github.tscholze.duobahn.data.domain.models.MarkerDefinition.MarkerType.ROADWORK
+import com.github.tscholze.duobahn.data.domain.models.MarkerDefinition.MarkerType.WEBCAM
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.maps.android.compose.*
 
@@ -44,38 +47,18 @@ fun MapView(markers: List<MarkerDefinition>) {
             //compassEnabled = true,
         ),
         cameraPositionState = cameraPositionState,
-    )
-
-    /*
-    Column(
-        modifier = Modifier
-            .fillMaxHeight()
-            .fillMaxWidth()
-            .background(Color.White)
     ) {
-        AndroidView({ mapView }) { mapView ->
-            CoroutineScope(Dispatchers.Main).launch {
-
-                // Load & setup map
-                mapView.awaitMap().apply {
-
-                    // Draw markers.
-                    markers.forEach {
-                        addMarker(
-                            MarkerOptions()
-                                .title(it.title)
-                                .snippet(it.snippet)
-                                .position(it.coordinate)
-                                .icon(
-                                    when (it.type) {
-                                        WEBCAM -> BitmapDescriptorFactory.fromResource(R.drawable.ic_map_webcam)
-                                        ROADWORK -> BitmapDescriptorFactory.fromResource(R.drawable.ic_map_roadwork)
-                                    }
-                                )
-                        )
-                    }
+        markers.forEach {
+            Marker(
+                title = it.title,
+                snippet = it.snippet,
+                position = it.coordinate,
+                icon = when (it.type) {
+                    WEBCAM -> BitmapDescriptorFactory.fromResource(R.drawable.ic_map_webcam)
+                    ROADWORK -> BitmapDescriptorFactory.fromResource(R.drawable.ic_map_roadwork)
                 }
-            }
+            )
         }
-    }*/
+
+    }
 }
