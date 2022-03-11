@@ -15,7 +15,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 fun Bottom(
     navController: NavHostController,
     items: Array<Item>,
-    updateImageId: (Int?) -> Unit,
     updateRoute: (String) -> Unit,
 ) {
     BottomNavigation(
@@ -30,7 +29,7 @@ fun Bottom(
                 label = { NavItemLabel(stringResource(item.title)) },
                 selected = isNavItemSelected(currentDestination, item.route),
                 onClick = {
-                    navItemOnClick(navController, item.route, updateImageId, updateRoute)
+                    navItemOnClick(navController, item.route, updateRoute)
                 },
                 selectedContentColor = MaterialTheme.colors.primary,
                 unselectedContentColor = MaterialTheme.colors.onPrimary

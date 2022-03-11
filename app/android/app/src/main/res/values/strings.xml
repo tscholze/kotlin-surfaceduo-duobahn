@@ -4,4 +4,10 @@
     <string name="app_disclaimer">This is an educational app, not meant for production. See "help" for more.</string>
     <string name="misc_logo_description">DuoBahn logo</string>
     <string name="settings_choose_autobahns_title">Wähle bis zu 3 Autobahnen</string>
+
+    <string name="navigation_preparation_route_id">preparation</string>
+    <string name="navigation_map_route_id">map</string>
+    <string name="navigation_settings_route_id">settings</string>
+    <string name="navigation_about_route_id">about</string>
+    <string name="scaffold_title">DuoBahn - Spannendes über Autobahnen</string>
 </resources>

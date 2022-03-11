@@ -47,7 +47,6 @@ fun isNavItemSelected(
 fun navItemOnClick(
     navController: NavController,
     navItem: String,
-    updateImageId: (Int?) -> Unit,
     updateRoute: (String) -> Unit,
 ) {
     // Navigate to new destination
@@ -61,9 +60,6 @@ fun navItemOnClick(
 
     // Update current route to new destination
     updateRoute(navItem)
-
-    // Reset selected image when switching gallery
-    updateImageId(null)
 }
 
 @ExperimentalAnimationApi

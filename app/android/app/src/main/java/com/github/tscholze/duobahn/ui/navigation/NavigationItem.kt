@@ -8,11 +8,9 @@ import androidx.annotation.StringRes
  * item.
  */
 data class Item(
-    @StringRes
-    val title: Int,
+    @StringRes val title: Int,
 
-    @DrawableRes
-    val icon: Int,
+    @DrawableRes val icon: Int,
 
     val route: String
 )
