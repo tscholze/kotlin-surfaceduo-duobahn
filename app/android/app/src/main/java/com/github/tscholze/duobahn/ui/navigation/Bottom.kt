@@ -14,19 +14,21 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 @Composable
 fun Bottom(
     navController: NavHostController,
-    items: Array<Item>,
+    items: Array<Screen>,
     updateRoute: (String) -> Unit,
 ) {
     BottomNavigation(
         backgroundColor = MaterialTheme.colors.primary,
     ) {
+
+
         val currentDestination = navController.currentBackStackEntryAsState().value?.destination
         items.forEach { item ->
             BottomNavItemWithSelector(
                 icon = {
-                    NavItemIcon(icon = item.icon, description = stringResource(item.title))
+                    NavItemIcon(icon = item.icon!!, description = stringResource(item.title!!))
                 },
-                label = { NavItemLabel(stringResource(item.title)) },
+                label = { NavItemLabel(stringResource(item.title!!)) },
                 selected = isNavItemSelected(currentDestination, item.route),
                 onClick = {
                     navItemOnClick(navController, item.route, updateRoute)

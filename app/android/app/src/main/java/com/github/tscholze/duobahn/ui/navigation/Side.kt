@@ -20,7 +20,7 @@ private val NAV_RAIL_TOP_SPACING = 32.dp
 @Composable
 fun SideNavigation(
     navController: NavHostController,
-    items: Array<Item>,
+    items: Array<Screen>,
     updateRoute: (String) -> Unit,
 ) {
     NavigationRail(
@@ -31,9 +31,9 @@ fun SideNavigation(
         items.forEach { item ->
             NavRailItemWithSelector(
                 icon = {
-                    NavItemIcon(icon = item.icon, description = stringResource(item.title))
+                    NavItemIcon(icon = item.icon!!, description = stringResource(item.title!!))
                 },
-                label = { NavItemLabel(stringResource(item.title)) },
+                label = { NavItemLabel(stringResource(item.title!!)) },
                 selected = isNavItemSelected(currentDestination, item.route),
                 onClick = {
                     navItemOnClick(navController, item.route, updateRoute)
