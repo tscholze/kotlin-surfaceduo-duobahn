@@ -38,7 +38,7 @@ fun PreparationPage(navController: NavController, repository: UnprocessedDataRep
 
     LaunchedEffect(navController, repository) {
         coroutineScope.launch {
-            repository.fetchAutobahns { navController.navigate("map") }
+            repository.fetchAutobahns { navController.navigate("content") }
         }
     }
 
