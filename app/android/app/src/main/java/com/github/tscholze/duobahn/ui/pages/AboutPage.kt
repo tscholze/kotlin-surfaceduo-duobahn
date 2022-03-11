@@ -23,7 +23,7 @@ import androidx.navigation.NavController
  */
 @Composable
 @ExperimentalMaterialApi
-fun MapPage(
+fun AboutPage(
     navController: NavController
 ) {
     // MARK: - Content -

@@ -13,7 +13,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
@@ -141,19 +140,16 @@ private val DEFAULT_SIZE = 50.dp
 private val SelectorShape = RoundedCornerShape(percent = 15)
 
 /**
- * Reference:https://github.com/android/compose-samples/blob/main/Jetsnack/app/src/main/java/com/example/jetsnack/ui/home/Home.kt
+ * Reference:
+ * https://github.com/android/compose-samples/blob/main/Jetsnack/app/src/main/java/com/example/jetsnack/ui/home/Home.kt
  *
- * Creates a graphic that indicates that an item is currently selected
- *
- * @param size: optional parameter that sets the size of the selector in dp (default is 50.dp)
- * @param color: optional parameter that sets the color of the selector (default is secondary color
- * from theme)
+ * Creates a graphic that indicates that an item is currently selected.
  */
 @Composable
-fun Selector(size: Dp = DEFAULT_SIZE, color: Color = MaterialTheme.colors.secondary) {
+fun Selector() {
     Spacer(
         modifier = Modifier
-            .size(size)
-            .background(color, SelectorShape)
+            .size(DEFAULT_SIZE)
+            .background(MaterialTheme.colors.secondary, SelectorShape)
     )
 }
