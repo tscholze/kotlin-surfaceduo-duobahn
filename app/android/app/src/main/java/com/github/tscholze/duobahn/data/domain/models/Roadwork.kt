@@ -1,6 +1,5 @@
 package com.github.tscholze.duobahn.data.domain.models
 
-import com.github.tscholze.duobahn.data.domain.models.MarkerDefinition.MarkerType.ROADWORK
 import java.time.LocalDateTime
 
 // MARK: - Data -
@@ -9,7 +8,7 @@ import java.time.LocalDateTime
  * Represents a roadwork.
  *
  * @property id Unique identifier.
- * @property name Human-readable name of the roadwork.
+ * @property title Human-readable name of the roadwork.
  * @property start Start date of the roadwork.
  * @property end Optional end date of the roadwork.
  * @property reason Optional reason why the roadwork exists.
@@ -18,27 +17,14 @@ import java.time.LocalDateTime
  */
 data class Roadwork(
     val id: String,
-    val name: String,
+    override val title: String,
     val start: LocalDateTime,
     val end: LocalDateTime?,
     val reason: String?,
     val restriction: String?,
     val widthLimitedTo: String?,
-    val coordinate: Coordinate
-)
-
-// MARK: - To Mapper -
-
-/**
- * Maps the roadwork to a map marker.
- */
-fun Roadwork.toMarkerDefinition() =
-    MarkerDefinition(
-        type = ROADWORK,
-        title = name,
-        coordinate = coordinate.toLngLat(),
-        snippet = null,
-    )
+    override val coordinate: Coordinate,
+): MarkerDefinition
 
 // MARK: - From Mapper -
 
@@ -84,7 +70,7 @@ fun com.github.tscholze.duobahn.data.network.dto.Roadwork.toModel(): Roadwork  {
 
     return Roadwork(
         id = identifier,
-        name = title,
+        title = title,
         start = startDate,
         end =  endDate,
         reason = reasonString,

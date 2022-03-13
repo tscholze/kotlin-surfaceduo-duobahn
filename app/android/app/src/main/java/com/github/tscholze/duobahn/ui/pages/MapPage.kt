@@ -1,5 +1,9 @@
 package com.github.tscholze.duobahn.ui.pages
 
+import android.content.Intent
+import android.net.Uri
+import android.widget.Toast
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -7,61 +11,132 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.github.tscholze.duobahn.R
-import com.github.tscholze.duobahn.data.domain.models.toMarkerDefinition
+import com.github.tscholze.duobahn.data.domain.models.MarkerDefinition
 import com.github.tscholze.duobahn.data.network.repositories.UnprocessedDataRepository
+import com.github.tscholze.duobahn.ui.components.map.MapOverlay
 import com.github.tscholze.duobahn.ui.components.map.MapView
 import com.github.tscholze.duobahn.ui.theme.AutobahnBlue
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.get
+import java.net.URL
 
 
 /**
- * A map page contains the map itself and its controlling elements.
+ * High level version of MapPage
  *
  * @param navController: App-wide navigation controller.
  */
-@Composable
+@ExperimentalAnimationApi
 @ExperimentalMaterialApi
+@Composable
 fun MapPage(navController: NavController, repository: UnprocessedDataRepository = get()) {
+    val coroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
 
-    // MARK: - Properties -
+    //TODO the viewModel/repository might expose this as a flow, so we can collectAsState() here
+    val autobahn by remember { mutableStateOf(repository.getAutobahns().first()) }
 
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = rememberBottomSheetState(initialValue = BottomSheetValue.Collapsed)
     )
 
-    // MARK: - Content -
+    var currentMarker by remember {
+        mutableStateOf<MarkerDefinition?>(null)
+    }
 
+    MapPage(
+        markers = autobahn.webcams + autobahn.roadworks,
+        bottomSheetScaffoldState = bottomSheetScaffoldState,
+        onFabClick = {
+            coroutineScope.launch {
+                with(bottomSheetScaffoldState.bottomSheetState) {
+                    if (isCollapsed) expand() else collapse()
+                }
+            }
+        },
+        onMapClick = { currentMarker = it },
+        currentMarker = currentMarker,
+        openInMaps = {
+            // from https://stackoverflow.com/a/39444675/12871582
+            val mapIntent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("geo:0,0?q=${it.latLng.latitude},${it.latLng.longitude}(${it.title}))")
+            ).apply { setPackage("com.google.android.apps.maps") }
+            context.startActivity(mapIntent)
+        },
+        openWeb = {
+            // from https://stackoverflow.com/a/9662990/12871582
+            // TODO this feels not elegant - maybe we shouldn't use java.net.URL in our domain model?
+            try {
+                val webIntent = Intent(Intent.ACTION_VIEW).apply {
+                    data = Uri.parse(it.toURI().toString())
+                }
+                context.startActivity(webIntent)
+            } catch (e: Throwable) {
+                Toast.makeText(context, context.getString(R.string.generic_error), Toast.LENGTH_SHORT).show()
+            }
+        }
+    )
+}
+
+
+/**
+ * Low level version of MapPage:
+ * Working on lists and lambdas -> easy to test & understand
+ * The compose part is also stateless: state is hoisted in the top-level-wrapper.
+ * (This is not true for the non-compose MapView)
+ *
+ * A map page contains the map itself and its controlling elements.
+ */
+@ExperimentalAnimationApi
+@ExperimentalMaterialApi
+@Composable
+fun MapPage(
+    markers: List<MarkerDefinition>,
+    bottomSheetScaffoldState: BottomSheetScaffoldState,
+    onFabClick: () -> Unit,
+    onMapClick: (MarkerDefinition?) -> Unit,
+    openInMaps: (MarkerDefinition) -> Unit,
+    openWeb: (URL) -> Unit,
+    currentMarker: MarkerDefinition?
+) {
+    // MARK: - Properties -
+
+    // MARK: - Content -
     BottomSheetScaffold(
         scaffoldState = bottomSheetScaffoldState,
         sheetContent = { SettingsPage() },
         sheetPeekHeight = 32.dp,
         floatingActionButton = {
-            MapContentFloatingActionButton(bottomSheetScaffoldState)
+            MapContentFloatingActionButton(onClick = onFabClick)
         }
     ) {
         Box {
             // Z index: 0
             MapView(
-                markers = repository.getAutobahns()
-                    .first()
-                    .let { autobahn ->
-                        autobahn.webcams.map { it.toMarkerDefinition() } +
-                                autobahn.roadworks.map { it.toMarkerDefinition() }
-                    }
+                markers = markers,
+                onMapClick = onMapClick
             )
 
-            // Z index: 1
+            // Z index 1
+            MapOverlay(
+                marker = currentMarker,
+                modifier = Modifier.padding(32.dp),
+                openInMaps = openInMaps,
+                openWeb = openWeb,
+            )
+
+            // Z index: 2
             Text(
                 stringResource(R.string.app_disclaimer),
                 fontSize = 8.sp,
@@ -78,25 +153,12 @@ fun MapPage(navController: NavController, repository: UnprocessedDataRepository 
 
 @ExperimentalMaterialApi
 @Composable
-private fun MapContentFloatingActionButton(
-    state: BottomSheetScaffoldState
-) {
-    val coroutineScope = rememberCoroutineScope()
-
+private fun MapContentFloatingActionButton(onClick: () -> Unit) {
     ExtendedFloatingActionButton(
         text = { Text(text = stringResource(R.string.map_fab_title)) },
         contentColor = Color.White,
         backgroundColor = AutobahnBlue,
-        onClick = {
-            val bottomSheetState = state.bottomSheetState
-            coroutineScope.launch {
-                if (bottomSheetState.isCollapsed) {
-                    bottomSheetState.expand()
-                } else {
-                    bottomSheetState.collapse()
-                }
-            }
-        },
+        onClick = onClick,
         icon = {
             Icon(
                 Icons.Default.Settings,
