@@ -1,7 +1,6 @@
 package com.github.tscholze.duobahn.ui.components.map
 
 import androidx.compose.animation.*
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -80,8 +79,8 @@ private fun WebcamOverlay(
             overflow = TextOverflow.Ellipsis
         )
 
-        WebcamPreview(
-            webcam = webcam,
+        VideoPlayerPreview(
+            imageUrl = webcam.thumbnailUrlString,
             modifier = Modifier
                 .padding(top = 8.dp)
                 .clickable { webcam.linkURL?.let { openWeb(it) } },

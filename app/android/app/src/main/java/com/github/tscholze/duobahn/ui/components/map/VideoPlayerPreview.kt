@@ -1,9 +1,8 @@
 package com.github.tscholze.duobahn.ui.components.map
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -14,25 +13,29 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.github.tscholze.duobahn.R
-import com.github.tscholze.duobahn.data.domain.models.Webcam
 
 @Composable
-fun WebcamPreview(
+fun VideoPlayerPreview(
     modifier: Modifier = Modifier,
-    webcam: Webcam,
+    imageUrl: String,
 ) {
     Surface(
-        modifier = modifier,
-        elevation = 4.dp
+        modifier = modifier.wrapContentSize(),
+        elevation = 4.dp,
+        shape = RoundedCornerShape(8.dp),
     ) {
-        Box(contentAlignment = Alignment.Center) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.wrapContentHeight()
+        ) {
             Image(
-                painter = rememberImagePainter(webcam.thumbnailUrlString),
+                painter = rememberImagePainter(imageUrl),
                 contentDescription = null,
-                contentScale = ContentScale.FillWidth,
-                modifier = Modifier.fillMaxWidth().wrapContentHeight()
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp)
             )
-
             Image(
                 painter = painterResource(R.drawable.ic_play),
                 contentDescription = stringResource(R.string.open_web)
