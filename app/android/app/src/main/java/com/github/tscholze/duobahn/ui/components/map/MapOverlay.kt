@@ -26,27 +26,25 @@ import java.net.URL
 @Composable
 fun MapOverlay(
     marker: MarkerDefinition?,
-    modifier: Modifier,
     openInMaps: (MarkerDefinition) -> Unit,
-    openWeb: (URL) -> Unit
+    openWeb: (URL) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    //TODO this animation looks weird
     AnimatedContent(
         targetState = marker,
-        transitionSpec = { fadeIn() with fadeOut(animationSpec = tween(500)) },
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        it?.let { markerTarget ->
-            Surface(
-                modifier = modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(16.dp),
-                elevation = 16.dp
-            ) {
-                when (markerTarget) {
-                    is Webcam -> WebcamOverlay(markerTarget, openInMaps, openWeb)
-                    is Roadwork -> RoadworksOverlay(roadwork = markerTarget)
-                    else -> throw NoWhenBranchMatchedException("Please add branch!")
-                }
+        transitionSpec = { fadeIn() with fadeOut() },
+        modifier = modifier.fillMaxWidth()
+    ) { target ->
+        Surface(
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(16.dp),
+            elevation = 16.dp
+        ) {
+            when (target) {
+                is Webcam -> WebcamOverlay(target, openInMaps, openWeb)
+                is Roadwork -> RoadworksOverlay(roadwork = target)
+                null -> Unit
+                else -> throw NoWhenBranchMatchedException("Please add branch!")
             }
         }
     }
