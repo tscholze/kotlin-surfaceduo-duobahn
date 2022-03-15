@@ -53,7 +53,6 @@ dependencies {
 
     var koin_version = "3.1.5"
     var navigation_version = "2.4.0-rc01"
-    var compose_version = "1.1.0-alpha06"
 
     // Android
     implementation "androidx.navigation:navigation-compose:$navigation_version"
@@ -62,9 +61,11 @@ dependencies {
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.material:material:$compose_version"
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
+    implementation "androidx.compose.material:material-icons-extended:$compose_version"
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'
     implementation 'androidx.activity:activity-compose:1.4.0'
     implementation("androidx.fragment:fragment-ktx:1.4.0")
+
 
     // Google
     implementation 'com.google.android.material:material:1.5.0'

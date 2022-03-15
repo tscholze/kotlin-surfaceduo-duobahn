@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">DuoBahn</string>
+    <string name="app_name_long">DuoBahn - Spaß mit den deutschen Autobahnen</string>
     <string name="map_fab_title">Einstellungen ändern</string>
     <string name="app_disclaimer">This is an educational app, not meant for production. See "help" for more.</string>
     <string name="misc_logo_description">DuoBahn logo</string>

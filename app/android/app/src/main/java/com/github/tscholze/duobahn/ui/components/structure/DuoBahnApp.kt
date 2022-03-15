@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.github.tscholze.duobahn.ui.pages.MapPage
+import com.github.tscholze.duobahn.ui.pages.ExtendedContentPage
 import com.github.tscholze.duobahn.ui.pages.PreparationPage
 import com.github.tscholze.duobahn.ui.pages.SettingsPage
 import com.microsoft.device.dualscreen.windowstate.WindowState
@@ -38,8 +38,8 @@ fun DuoBahnApp(windowState: WindowState) {
             // Preparation page.
             composable("preparation") { PreparationPage(navController) }
 
-            // Map page.
-            composable("map") { MapPage(navController) }
+            // Content container page.
+            composable("content") { ExtendedContentPage(navController) }
 
             // Settings page.
             composable("settings") { SettingsPage() }
