@@ -1,8 +1,8 @@
 package com.github.tscholze.duobahn.ui.pages
 
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.*
@@ -11,7 +11,6 @@ import androidx.compose.material.icons.filled.Dashboard
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -19,6 +18,13 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.github.tscholze.duobahn.R
 
+/**
+ * Extended, that means for foldables or
+ * spanned dual screen devices optimized content
+ * page.
+ *
+ * @param navController Underlying nav controller.
+ */
 @ExperimentalMaterialApi
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -39,13 +45,10 @@ fun ExtendedContentPage(navController: NavController) {
     ) {
         Row {
             // Navigation rail
-            // TODO: Center it vertically
-            Box(contentAlignment = Alignment.Center) {
-                NavigationRail(
-                    selectedItem = selectedItem,
-                    onSelectItem = { selectedItem = it }
-                )
-            }
+            NavigationRail(
+                selectedItem = selectedItem,
+                onSelectItem = { selectedItem = it }
+            )
 
             // Selected content
             MapPage()
@@ -54,17 +57,30 @@ fun ExtendedContentPage(navController: NavController) {
     }
 }
 
+/**
+ * Centered navigation rail component for given
+ * items.
+ *
+ * @param selectedItem The currently selected nav item.
+ * @param onSelectItem Event handler if selected nav item changed.
+ */
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun NavigationRail(
     selectedItem: NavigationItem,
-    onSelectItem: (NavigationItem) -> Unit,
-    modifier: Modifier = Modifier
+    onSelectItem: (NavigationItem) -> Unit
 ) {
+
+    // Both spacer will center the items.
+    // There is no `menuGravity` parameter
+    // as in XML based UI definition
     NavigationRail(
-        modifier = modifier.width(80.dp),
+        modifier = Modifier.width(80.dp),
         backgroundColor = MaterialTheme.colors.surface
     ) {
+
+        Spacer(Modifier.weight(1f))
+
         for (item in NavigationItem.values()) {
             NavigationRailItem(
                 selected = selectedItem == item,
@@ -76,6 +92,8 @@ private fun NavigationRail(
                 label = { Text(item.title, modifier = Modifier.padding(top = 8.dp)) }
             )
         }
+
+        Spacer(Modifier.weight(1f))
     }
 }
 
