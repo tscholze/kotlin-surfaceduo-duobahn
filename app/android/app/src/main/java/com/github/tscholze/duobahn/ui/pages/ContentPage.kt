@@ -1,10 +1,7 @@
 package com.github.tscholze.duobahn.ui.pages
 
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Dashboard
@@ -43,15 +40,16 @@ fun ExtendedContentPage(navController: NavController) {
             )
         }
     ) {
-        Row {
+        Box {
+
+            // Selected content
+            MapPage()
+
             // Navigation rail
             NavigationRail(
                 selectedItem = selectedItem,
                 onSelectItem = { selectedItem = it }
             )
-
-            // Selected content
-            MapPage()
         }
 
     }
@@ -76,7 +74,7 @@ private fun NavigationRail(
     // as in XML based UI definition
     NavigationRail(
         modifier = Modifier.width(80.dp),
-        backgroundColor = MaterialTheme.colors.surface
+        backgroundColor = MaterialTheme.colors.background.copy(alpha = 0.8f)
     ) {
 
         Spacer(Modifier.weight(1f))
