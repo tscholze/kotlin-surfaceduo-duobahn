@@ -74,7 +74,7 @@ private fun NavigationRail(
     // as in XML based UI definition
     NavigationRail(
         modifier = Modifier.width(80.dp),
-        backgroundColor = MaterialTheme.colors.background.copy(alpha = 0.8f)
+        backgroundColor = MaterialTheme.colors.background.copy(alpha = 1f)
     ) {
 
         Spacer(Modifier.weight(1f))
@@ -85,8 +85,8 @@ private fun NavigationRail(
                 onClick = { onSelectItem.invoke(item) },
                 icon = { Icon(item.icon, item.title) },
                 alwaysShowLabel = true,
-                selectedContentColor = MaterialTheme.colors.primaryVariant,
-                unselectedContentColor = MaterialTheme.colors.primary,
+                selectedContentColor = MaterialTheme.colors.primary,
+                unselectedContentColor = MaterialTheme.colors.secondary,
                 label = { Text(item.title, modifier = Modifier.padding(top = 8.dp)) }
             )
         }

@@ -79,6 +79,7 @@ class UnprocessedDataRepository: KoinComponent {
                         ignoreUnknownKeys = true
                         prettyPrint = true
                         isLenient = true
+                        useAlternativeNames
                     }
                 )
 

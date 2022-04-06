@@ -3,10 +3,12 @@ package com.github.tscholze.duobahn.data.domain.models
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.net.Uri
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.MarkerOptions
+import java.net.URI
 import java.net.URL
 
 /**
@@ -17,7 +19,7 @@ import java.net.URL
  * @property direction Point of view direction
  * @property coordinate Location of webcam
  * @property thumbnailURL Url to the current thumbnail
- * @property linkURL to the actual camera feed.
+ * @property linkUri to the actual camera feed.
  */
 data class Webcam(
     val id: String,
@@ -26,7 +28,7 @@ data class Webcam(
     override val coordinate: Coordinate,
     val thumbnailURL: URL?,
     val thumbnailUrlString: String,
-    val linkURL: URL?
+    val linkUri: Uri?
 ): MarkerDefinition
 
 // MARK: - From Mapper -
@@ -37,9 +39,10 @@ data class Webcam(
 fun com.github.tscholze.duobahn.data.network.dto.Webcam.toModel(): Webcam {
 
     var thumbnailURL: URL? = null
-    var linkURL:URL? = null
-    try { thumbnailURL = URL(imageurl) } catch(e: Exception) {}
-    try { linkURL = URL(linkurl) } catch(e: Exception) {}
+    var linkUri: Uri? = null
+
+    try { thumbnailURL = URL(imageUrl) } catch(e: Exception) {}
+    try { linkUri = Uri.parse(linkUrl) } catch(e: Exception) {}
 
     return Webcam(
         id = identifier,
@@ -47,17 +50,7 @@ fun com.github.tscholze.duobahn.data.network.dto.Webcam.toModel(): Webcam {
         direction = subtitle,
         coordinate = coordinate.toModel(),
         thumbnailURL = thumbnailURL,
-        thumbnailUrlString = imageurl,
-        linkURL = linkURL
+        thumbnailUrlString = imageUrl,
+        linkUri = linkUri
     )
-}
-
-fun MarkerOptions.icon(context: Context, @DrawableRes vectorDrawable: Int): MarkerOptions {
-    this.icon(ContextCompat.getDrawable(context, vectorDrawable)?.run {
-        setBounds(0, 0, intrinsicWidth, intrinsicHeight)
-        val bitmap = Bitmap.createBitmap(intrinsicWidth, intrinsicHeight, Bitmap.Config.ARGB_8888)
-        draw(Canvas(bitmap))
-        BitmapDescriptorFactory.fromBitmap(bitmap)
-    })
-    return this
 }

@@ -1,5 +1,6 @@
 package com.github.tscholze.duobahn.data.network.dto
 import kotlinx.serialization.*
+import kotlinx.serialization.json.JsonNames
 
 // MARK: - Helpers -
 
@@ -148,9 +149,11 @@ data class Webcam(
     val future: Boolean,
     val icon: String,
     val identifier: String,
-    val imageurl: String,
+    @JsonNames("imageurl")
+    val imageUrl: String,
     val isBlocked: String,
-    val linkurl: String,
+    @JsonNames("linkurl")
+    val linkUrl: String,
     val `operator`: String,
     val point: String,
     val subtitle: String,

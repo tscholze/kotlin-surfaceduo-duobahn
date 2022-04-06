@@ -5,9 +5,7 @@ import android.net.Uri
 import android.widget.Toast
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -24,7 +22,6 @@ import com.github.tscholze.duobahn.data.network.repositories.UnprocessedDataRepo
 import com.github.tscholze.duobahn.ui.components.map.MapOverlay
 import com.github.tscholze.duobahn.ui.components.map.MapView
 import org.koin.androidx.compose.get
-import java.net.URL
 
 
 /**
@@ -39,9 +36,8 @@ fun MapPage(repository: UnprocessedDataRepository = get()) {
 
     // MARK: - Properties -
 
-    var currentMarker by remember { mutableStateOf<MarkerDefinition?>(null) }
-
     val context = LocalContext.current
+    var currentMarker by remember { mutableStateOf<MarkerDefinition?>(null) }
     val autobahns by remember { mutableStateOf(repository.getAutobahns()) }
     val markers: MutableList<MarkerDefinition> = arrayListOf()
 
@@ -56,11 +52,14 @@ fun MapPage(repository: UnprocessedDataRepository = get()) {
         onMapClick = { currentMarker = it },
         currentMarker = currentMarker,
         openInMaps = {
-            // from https://stackoverflow.com/a/39444675/12871582
+            // The feature is based on:
+            // https://stackoverflow.com/a/39444675/12871582
             val mapIntent = Intent(
                 Intent.ACTION_VIEW,
                 Uri.parse("geo:0,0?q=${it.latLng.latitude},${it.latLng.longitude}(${it.title}))")
             ).apply { setPackage("com.google.android.apps.maps") }
+
+            // Open map intent.
             context.startActivity(mapIntent)
         },
         openWeb = {
@@ -68,7 +67,7 @@ fun MapPage(repository: UnprocessedDataRepository = get()) {
             // TODO this feels not elegant - maybe we shouldn't use java.net.URL in our domain model?
             try {
                 val webIntent = Intent(Intent.ACTION_VIEW).apply {
-                    data = Uri.parse(it.toURI().toString())
+                    data = it
                 }
                 context.startActivity(webIntent)
             } catch (e: Throwable) {
@@ -98,7 +97,7 @@ fun MapPage(
     markers: List<MarkerDefinition>,
     onMapClick: (MarkerDefinition?) -> Unit,
     openInMaps: (MarkerDefinition) -> Unit,
-    openWeb: (URL) -> Unit,
+    openWeb: (Uri?) -> Unit,
     currentMarker: MarkerDefinition?
 ) {
 
@@ -120,15 +119,22 @@ fun MapPage(
         )
 
         // Z index: 2
-        Text(
-            stringResource(R.string.app_disclaimer),
-            fontSize = 8.sp,
-            color = Color.Black,
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(Color.White.copy(0.6f))
                 .padding(4.dp)
                 .align(Alignment.TopStart)
-        )
+        ) {
+            // Spacer with width of NavigationRail.
+            Spacer(modifier = Modifier.width(88.dp))
+
+            // Text
+            Text(
+                stringResource(R.string.app_disclaimer),
+                fontSize = 8.sp,
+                color = Color.Black,
+            )
+        }
     }
 }

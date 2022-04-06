@@ -1,5 +1,6 @@
 package com.github.tscholze.duobahn.ui.components.map
 
+import android.net.Uri
 import androidx.compose.animation.*
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -26,7 +27,7 @@ import java.net.URL
 fun MapOverlay(
     marker: MarkerDefinition?,
     openInMaps: (MarkerDefinition) -> Unit,
-    openWeb: (URL) -> Unit,
+    openWeb: (Uri?) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     AnimatedContent(
@@ -50,14 +51,16 @@ fun MapOverlay(
 }
 
 /**
- * Implements a markerOverlay as designed in figma:
- * https://www.figma.com/file/GX2jCbGtHolUftwzeTKgfN/DuoBahn?node-id=0%3A1
+ * Overlay for a single webcam implemented as a markerOverlay.
+ *
+ * Figma:
+ *  - https://www.figma.com/file/GX2jCbGtHolUftwzeTKgfN/DuoBahn?node-id=0%3A1
  */
 @Composable
 private fun WebcamOverlay(
     webcam: Webcam,
     openInMaps: (Webcam) -> Unit,
-    openWeb: (URL) -> Unit
+    openWeb: (Uri?) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -83,7 +86,7 @@ private fun WebcamOverlay(
             imageUrl = webcam.thumbnailUrlString,
             modifier = Modifier
                 .padding(top = 8.dp)
-                .clickable { webcam.linkURL?.let { openWeb(it) } },
+                .clickable { webcam.linkUri?.let { openWeb(it) } },
         )
 
         Row(
@@ -98,7 +101,7 @@ private fun WebcamOverlay(
                     maxLines = 1,
                 )
             }
-            webcam.linkURL?.let {
+            webcam.linkUri?.let {
                 Button(
                     modifier = Modifier.padding(start = 8.dp),
                     onClick = { openWeb(it) }
