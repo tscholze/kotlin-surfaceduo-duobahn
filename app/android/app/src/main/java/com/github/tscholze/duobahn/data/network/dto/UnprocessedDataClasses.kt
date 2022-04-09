@@ -1,12 +1,24 @@
 package com.github.tscholze.duobahn.data.network.dto
-import kotlinx.serialization.*
+
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonNames
 
 // MARK: - Helpers -
 
+/**
+ * Describes a location by
+ * given lat and lng values.
+ */
 @Serializable
 data class Coordinate(
+    /**
+     * Latitude of the coordinate
+     */
     val lat: String,
+
+    /**
+     * Longitude of the coordinate
+     */
     val long: String
 )
 
@@ -49,9 +61,21 @@ data class Autobahn(
     val electricChargingStations: List<ElectricChargingStation>
 )
 
+/**
+ * Container model that contains the
+ * actual data source as well as the timestamp
+ * of the last updated.
+ */
 @Serializable
 data class Autobahns(
+    /**
+     * Last update of the data source.
+     */
     val updatedAt: String,
+
+    /**
+     * Data source.
+     */
     val autobahns: List<Autobahn>
 )
 
