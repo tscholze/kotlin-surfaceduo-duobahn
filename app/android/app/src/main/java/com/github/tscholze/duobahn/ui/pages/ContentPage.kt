@@ -1,7 +1,10 @@
 package com.github.tscholze.duobahn.ui.pages
 
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Dashboard
@@ -22,37 +25,79 @@ import com.github.tscholze.duobahn.R
  *
  * @param navController Underlying nav controller.
  */
+@Composable
 @ExperimentalMaterialApi
 @OptIn(ExperimentalAnimationApi::class)
-@Composable
 fun ExtendedContentPage(navController: NavController) {
 
     // MARK: - Properties -
 
+    // Selected navigation item state.
     var selectedItem by remember { mutableStateOf(NavigationItem.MAP) }
+
+    // Bottom sheet state.
+    // Default value: Collapsed
+    val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
+        bottomSheetState = rememberBottomSheetState(
+            initialValue = BottomSheetValue.Collapsed
+        )
+    )
 
     // MARK: - Content -
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(text = stringResource(id = R.string.app_name_long)) }
-            )
-        }
+    BottomSheetScaffold(
+        scaffoldState = bottomSheetScaffoldState,
+        sheetContent = { SheetContent() },
+        topBar = { AppBar() }
     ) {
-        Box {
-
-            // Selected content
-            MapPage()
-
-            // Navigation rail
-            NavigationRail(
-                selectedItem = selectedItem,
-                onSelectItem = { selectedItem = it }
-            )
-        }
-
+        PageContent(
+            selectedItem = selectedItem,
+            onSelectItem = { selectedItem = it }
+        )
     }
+}
+
+/**
+ * App's app bar.
+ */
+@Composable
+private fun AppBar() {
+    TopAppBar(
+        title = { Text(stringResource(id = R.string.app_name_long)) }
+    )
+}
+
+/**
+ * Page content structure.
+ *
+ * @param selectedItem The currently selected nav item.
+ * @param onSelectItem Event handler if selected nav item changed.
+ */
+@Composable
+@OptIn(ExperimentalAnimationApi::class, ExperimentalMaterialApi::class)
+private fun PageContent(
+    selectedItem: NavigationItem,
+    onSelectItem: (NavigationItem) -> Unit
+) {
+    Box {
+
+        // Selected content
+        MapPage()
+
+        // Navigation rail
+        NavigationRail(
+            selectedItem = selectedItem,
+            onSelectItem = { onSelectItem(it) }
+        )
+    }
+}
+
+/**
+ * Bottom sheet content related on given data origin.
+ */
+@Composable
+private fun SheetContent() {
+    Text(text = "Foo")
 }
 
 /**
@@ -62,8 +107,8 @@ fun ExtendedContentPage(navController: NavController) {
  * @param selectedItem The currently selected nav item.
  * @param onSelectItem Event handler if selected nav item changed.
  */
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
+@OptIn(ExperimentalMaterialApi::class)
 private fun NavigationRail(
     selectedItem: NavigationItem,
     onSelectItem: (NavigationItem) -> Unit
@@ -95,9 +140,16 @@ private fun NavigationRail(
     }
 }
 
-
+/**
+ * Contains all available user-accessible navigation items.
+ * Will be used in navigation rail and bottom bar
+ */
 private enum class NavigationItem(
+
+    /** Title of the item */
     val title: String,
+
+    /** Image resource of the corresponding icon */
     val icon: ImageVector
 ) {
 
