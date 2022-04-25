@@ -1,73 +1,66 @@
-package com.github.tscholze.duobahn.ui.components.map
+package com.github.tscholze.duobahn.ui.pages
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.Composable
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.github.tscholze.duobahn.R
-import com.github.tscholze.duobahn.data.domain.models.*
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.maps.android.compose.*
+import com.github.tscholze.duobahn.data.domain.models.MarkerDefinition
+import com.github.tscholze.duobahn.data.network.repositories.UnprocessedDataRepository
+import com.github.tscholze.duobahn.ui.components.map.MapView
+import org.koin.androidx.compose.get
 
 
 /**
- * Composes a map view.
+ * Low level version of MapPage:
+ * Working on lists and lambdas -> easy to test & understand
+ * The compose part is also stateless: state is hoisted in the top-level-wrapper.
+ * (This is not true for the non-compose MapView)
  *
- * to get started with this component, it's best to look at the official compose map docs:
- * https://github.com/googlemaps/android-maps-compose and their sample app
- *
- * TODO: Show marks, etc.
+ * A map page contains the map itself and its controlling elements.
  */
+@ExperimentalAnimationApi
+@ExperimentalMaterialApi
 @Composable
-fun MapView(
-    markers: List<MarkerDefinition>,
-    onMapClick: (MarkerDefinition?) -> Unit,
-) {
+fun MapView(repository: UnprocessedDataRepository = get()) {
 
-    // MARK: - State properties -
+    // MARK: - Properties -
 
-    // Observing and controlling the camera's state can be done with a CameraPositionState
-    val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(markers.first().coordinate.toLngLat(), 11f)
-    }
+    val aggregator by remember { mutableStateOf(repository.getMarkers()) }
+    var currentMarker by remember { mutableStateOf<MarkerDefinition?>(null) }
 
-    // MARK: - UI -
+    // MARK: - Content -
 
-    GoogleMap(
-        modifier = Modifier.fillMaxSize(),
-        properties = MapProperties(
-            // Maybe these are also good.
-            //  mapType = MapType.SATELLITE,
-            // isTrafficEnabled = true
-        ),
-        uiSettings = MapUiSettings(
-            // Disabled to not be covered by the FAB.
-            zoomControlsEnabled = false,
-            myLocationButtonEnabled = true,
-            // Maybe these are also good.
-            //compassEnabled = true,
-        ),
-        cameraPositionState = cameraPositionState,
-        onMapClick = { onMapClick(null) }
-    ) {
-        markers.forEach { markerDefinition ->
-            Marker(
-                position = markerDefinition.coordinate.toLngLat(),
-                icon = when (markerDefinition) {
-                    is Webcam -> BitmapDescriptorFactory.fromResource(R.drawable.ic_map_webcam)
-                    is Roadwork -> BitmapDescriptorFactory.fromResource(R.drawable.ic_map_roadwork)
-                    else -> throw NoWhenBranchMatchedException("Please define me!")
-                },
-                onClick = {
-                    onMapClick(markerDefinition);
+    Scaffold {
+        Box {
+            // Z index: 0
+            MapView(
+                markers = aggregator.markers,
+                onMapClick = { currentMarker = it }
+            )
 
-                    // returning false here allows the standard onClick to proceed:
-                    // - centering the map
-                    // - showing an infoWindow. This is not visible tho, since marker title / snippet is not set
-                    false
-                }
+            // Z index: 1
+            Text(
+                stringResource(R.string.app_disclaimer),
+                fontSize = 8.sp,
+                color = Color.Black,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.White.copy(0.6f))
+                    .padding(4.dp)
+                    .align(Alignment.TopStart)
             )
         }
-
     }
 }

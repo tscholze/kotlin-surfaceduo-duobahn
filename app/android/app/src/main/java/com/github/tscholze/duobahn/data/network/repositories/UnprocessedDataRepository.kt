@@ -1,7 +1,7 @@
 package com.github.tscholze.duobahn.data.network.repositories
 
+import com.github.tscholze.duobahn.data.domain.models.MarkerDefinition
 import com.github.tscholze.duobahn.data.domain.models.toModel
-import com.github.tscholze.duobahn.data.network.dto.Autobahn
 import com.github.tscholze.duobahn.data.network.dto.Autobahns
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
@@ -39,6 +39,11 @@ class UnprocessedDataRepository: KoinComponent {
             return autobahns
         }
          */
+    }
+
+    fun getMarkers(): MarkerAggregation {
+        val markers = getAutobahns().map { it.webcams + it.roadworks }.flatten()
+        return MarkerAggregation(markers)
     }
 
     suspend fun fetchAutobahns(
@@ -87,3 +92,7 @@ class UnprocessedDataRepository: KoinComponent {
         }
     }
 }
+
+data class MarkerAggregation(
+    val markers: Iterable<MarkerDefinition>
+)

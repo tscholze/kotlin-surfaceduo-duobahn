@@ -15,7 +15,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.github.tscholze.duobahn.R
 import com.github.tscholze.duobahn.data.network.repositories.UnprocessedDataRepository
-import com.github.tscholze.duobahn.ui.components.buttons.Chip
 import com.google.accompanist.flowlayout.FlowColumn
 import org.koin.androidx.compose.get
 
@@ -44,7 +43,7 @@ fun SettingsPage(
                 .padding(horizontal = 16.dp)
         ) {
             repository.getAutobahns().map {
-                Chip(name = it.id)
+                Text(it.name)
             }
         }
     }
