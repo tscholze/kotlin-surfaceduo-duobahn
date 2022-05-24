@@ -23,10 +23,6 @@ import com.github.tscholze.duobahn.ui.theme.AutobahnBlue
 @OptIn(ExperimentalAnimationApi::class, ExperimentalMaterialApi::class)
 fun ContentPage() {
 
-    // MARK: - Properties -
-
-    val openDialog = remember { mutableStateOf(true) }
-
     // MARK: - Content -
 
     // Content container
@@ -34,7 +30,7 @@ fun ContentPage() {
 
         // Z-Index: 0
         // Map view
-        MapView()
+       // MapView()
 
         // Z-Index: 1
         // Floating actions buttons
@@ -46,9 +42,7 @@ fun ContentPage() {
         ) {
             DBFloatingActionButton(
                 icon = Icons.Rounded.Settings,
-                onClick = {
-                    openDialog.value = true
-                }
+                onClick = { /*TODO*/ }
             )
 
             DBFloatingActionButton(
@@ -56,15 +50,9 @@ fun ContentPage() {
                 onClick = { /*TODO*/ }
             )
         }
-
-        // Z-Index: 3
-        // Optional dialog / modal
-        Modal(
-            showModal = openDialog.value,
-            onClose = { openDialog.value = false }
-        )
     }
 }
+
 
 @Composable
 private fun DBFloatingActionButton(
@@ -77,50 +65,4 @@ private fun DBFloatingActionButton(
         onClick = onClick,
         content = { Icon(icon, contentDescription = "Localized description") }
     )
-}
-
-@Composable
-private fun Modal(showModal: Boolean, onClose: () -> Unit) {
-    if (showModal) {
-        Dialog(
-            onDismissRequest = { onClose() }
-        ) {
-            Surface(
-                shape = RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp),
-                color = Color.LightGray,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(start = 24.dp, top = 24.dp, end = 24.dp),
-            ) {
-                // Content container
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                    modifier = Modifier.padding(16.dp)
-                ) {
-
-                    // Header
-                    Row(modifier = Modifier.align(Alignment.Start)) {
-                        0
-                        // Spacer
-                        Spacer(modifier = Modifier.weight(1f))
-
-                        // Close button
-                        Button(onClick = onClose) {
-                            Icon(Icons.Default.Close, contentDescription = "Localized description")
-                        }
-                    }
-
-                    AboutContent()
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun AboutContent() {
-    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-        Text(text = "About")
-    }
-
 }
