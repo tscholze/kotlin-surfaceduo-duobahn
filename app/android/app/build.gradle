@@ -1,9 +1,10 @@
-
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.6.10'
 }
+apply from: 'secrets.gradle'
+
 
 android {
     compileSdk 31
@@ -27,6 +28,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    buildTypes.each {
+        it.buildConfigField "String", "CREDENTIALS_KEY", "\"$credentialsKey\""
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -78,6 +84,7 @@ dependencies {
     // Microsoft
     implementation 'com.microsoft.device.dualscreen:twopanelayout:1.0.0-alpha10'
     implementation 'com.microsoft.device.dualscreen:windowstate:1.0.0-alpha1'
+    implementation 'com.microsoft.maps:maps-sdk:1.2.0'
 
     // Coil
     implementation("io.coil-kt:coil-compose:1.4.0")
