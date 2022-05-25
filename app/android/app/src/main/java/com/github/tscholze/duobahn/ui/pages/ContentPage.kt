@@ -31,7 +31,7 @@ fun ContentPage() {
 
         // Z-Index: 0
         // Map view
-        BingMap(lat = 48.137154, lng = 11.576124, zoom = 10.0)
+        BingMap(lat = 48.137154, lng = 11.576124)
 
         // Z-Index: 1
         // Floating actions buttons

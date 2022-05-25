@@ -13,14 +13,18 @@ import com.microsoft.maps.MapScene
 import com.microsoft.maps.MapView
 import kotlinx.coroutines.launch
 
+// MARK: - Internal composable views -
+
 @Composable
-fun BingMap(lat: Double, lng: Double, zoom: Double) {
+fun BingMap(lat: Double, lng: Double) {
     val map = rememberBingMapViewWithLifecycle()
-    BingMapContainer(map = map, lat = lat, lng = lng, zoom = zoom)
+    BingMapContainer(map = map, lat = lat, lng = lng)
 }
 
+// MARK: - Private composable views -
+
 @Composable()
-fun BingMapContainer(map: MapView, lat: Double, lng: Double, zoom: Double) {
+private fun BingMapContainer(map: MapView, lat: Double, lng: Double) {
 
     LaunchedEffect(map) {
         val point = Geopoint(lat, lng)
@@ -31,7 +35,7 @@ fun BingMapContainer(map: MapView, lat: Double, lng: Double, zoom: Double) {
 
     AndroidView(factory = { map }) {
         coroutineScope.launch {
-            it.centerTo(lat = lat, lng = lng, zoom = zoom)
+            it.centerTo(lat = lat, lng = lng)
         }
     }
 }
@@ -42,7 +46,7 @@ private fun rememberBingMapViewWithLifecycle(): MapView {
     val map = remember { MapView(context) }
     map.setCredentialsKey(CREDENTIALS_KEY)
 
-    val observer = rememberMapboxViewLifecycleObserver(map)
+    val observer = rememberBingMapViewLifecycleObserver(map)
     val lifecycle = LocalLifecycleOwner.current.lifecycle
 
     DisposableEffect(lifecycle) {
@@ -57,7 +61,7 @@ private fun rememberBingMapViewWithLifecycle(): MapView {
 }
 
 @Composable
-private fun rememberMapboxViewLifecycleObserver(map: MapView): LifecycleEventObserver {
+private fun rememberBingMapViewLifecycleObserver(map: MapView): LifecycleEventObserver {
     return remember(map) {
         LifecycleEventObserver { _, event ->
             when (event) {
@@ -72,7 +76,7 @@ private fun rememberMapboxViewLifecycleObserver(map: MapView): LifecycleEventObs
 
 // MARK: - Extension -
 
-fun MapView.centerTo(lat: Double, lng: Double, zoom: Double) {
+fun MapView.centerTo(lat: Double, lng: Double) {
     val point = Geopoint(lat, lng)
     setScene(MapScene.createFromLocation(point), MapAnimationKind.NONE)
 }
