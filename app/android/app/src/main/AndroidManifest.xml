@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.github.tscholze.duobahn">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:name=".DuoBahnApplication"
         android:icon="@mipmap/ic_launcher"
@@ -11,7 +13,6 @@
         android:theme="@style/Theme.DuoBahn"
         android:fullBackupContent="true"
         android:allowBackup="true">
-
         <!-- Meta data -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -31,5 +32,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

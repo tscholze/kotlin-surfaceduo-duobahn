@@ -1,6 +1,7 @@
 package com.github.tscholze.duobahn.data.domain.models
 
 import com.google.android.gms.maps.model.LatLng
+import com.microsoft.maps.Geopoint
 
 /**
  * Represents a coordinate.
@@ -31,3 +32,8 @@ fun com.github.tscholze.duobahn.data.network.dto.Coordinate.toModel() =
  * Gets the coordinate as MapView'able LatLng value
  */
 fun Coordinate.toLngLat() = LatLng(lat, long)
+
+/**
+ * Gets the coordinate as Bing Map LatLng value
+ */
+fun Coordinate.toGeoPoint() = Geopoint(lat, long)

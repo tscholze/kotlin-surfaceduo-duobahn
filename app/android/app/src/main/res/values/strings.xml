@@ -8,4 +8,8 @@
     <string name="open_web">Webseite öffnen</string>
     <string name="webcam_id">Webcam ID: %s</string>
     <string name="generic_error">Ups! Da ist wohl etwas schief gelaufen</string>
+    <string name="misc_no">Nein</string>
+    <string name="misc_yes">Ja</string>
+    <string name="alert_location_request_title">Wo bist du?</string>
+    <string name="alert_location_request_message">Darf die App deine ungefähre Position wissen? So könnten wir dir Dinge in deiner Nähe anzeigen</string>
 </resources>

@@ -1,6 +1,8 @@
 package com.github.tscholze.duobahn.data.domain.models
 
+import com.microsoft.maps.Geopoint
 import java.time.LocalDateTime
+
 
 // MARK: - Data -
 
@@ -16,15 +18,17 @@ import java.time.LocalDateTime
  * @property widthLimitedTo Optional width of lane that's still open.
  */
 data class Roadwork(
-    val id: String,
+    override val id: String,
     override val title: String,
+    override val location: Geopoint,
+    override val imageId: Int = com.github.tscholze.duobahn.R.drawable.ic_map_roadwork,
+
     val start: LocalDateTime,
     val end: LocalDateTime?,
     val reason: String?,
     val restriction: String?,
     val widthLimitedTo: String?,
-    override val coordinate: Coordinate,
-): MarkerDefinition
+) : Mapable
 
 // MARK: - From Mapper -
 
@@ -64,7 +68,7 @@ fun com.github.tscholze.duobahn.data.network.dto.Roadwork.toModel(): Roadwork  {
         ?.joinToString { "" }
         ?.trim()
 
-    val coordinate = this.coordinate.toModel()
+    val location = this.coordinate.toModel().toGeoPoint()
     val startDate = startString.toModelDate()
     val endDate = endString?.toModelDate()
 
@@ -76,8 +80,6 @@ fun com.github.tscholze.duobahn.data.network.dto.Roadwork.toModel(): Roadwork  {
         reason = reasonString,
         restriction = restrictionsString,
         widthLimitedTo = widthLimitedToString,
-        coordinate = coordinate
+        location = location
     )
 }
-
-
