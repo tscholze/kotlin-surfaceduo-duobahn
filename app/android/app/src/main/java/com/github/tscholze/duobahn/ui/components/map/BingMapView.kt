@@ -1,5 +1,6 @@
 package com.github.tscholze.duobahn.ui.components.map
 
+import android.graphics.BitmapFactory
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -7,35 +8,56 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import com.github.tscholze.duobahn.BuildConfig.CREDENTIALS_KEY
-import com.microsoft.maps.Geopoint
-import com.microsoft.maps.MapAnimationKind
-import com.microsoft.maps.MapScene
-import com.microsoft.maps.MapView
+import com.github.tscholze.duobahn.data.network.repositories.UnprocessedDataRepository
+import com.microsoft.maps.*
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.get
+
 
 // MARK: - Internal composable views -
 
 @Composable
-fun BingMap(lat: Double, lng: Double) {
+fun BingMap(repository: UnprocessedDataRepository = get()) {
+
+    // Get map
     val map = rememberBingMapViewWithLifecycle()
-    BingMapContainer(map = map, lat = lat, lng = lng)
+
+    // Get pin data source
+    val aggregator by remember { mutableStateOf(repository.getMarkers()) }
+
+    // Create pin map layer
+    val mapLayer = MapElementLayer()
+    map.layers.add(mapLayer)
+
+    // Add all pins
+    aggregator.markers.forEach {
+        val pin = MapIcon().apply {
+            tag = it.id
+            title = it.title
+            location = it.location
+            image =
+                MapImage(BitmapFactory.decodeResource(LocalContext.current.resources, it.imageId))
+        }
+
+        mapLayer.elements.add(pin)
+    }
+
+    // Set map to container
+    BingMapContainer(map = map)
 }
 
 // MARK: - Private composable views -
 
 @Composable()
-private fun BingMapContainer(map: MapView, lat: Double, lng: Double) {
-
+private fun BingMapContainer(map: MapView) {
     LaunchedEffect(map) {
-        val point = Geopoint(lat, lng)
-        map.setScene(MapScene.createFromLocation(point), MapAnimationKind.NONE)
+        // map.setScene(MapScene.createFromLocation(point), MapAnimationKind.NONE)
     }
 
     val coroutineScope = rememberCoroutineScope()
-
     AndroidView(factory = { map }) {
         coroutineScope.launch {
-            it.centerTo(lat = lat, lng = lng)
+            // it.centerTo(lat = lat, lng = lng)
         }
     }
 }
@@ -80,3 +102,5 @@ fun MapView.centerTo(lat: Double, lng: Double) {
     val point = Geopoint(lat, lng)
     setScene(MapScene.createFromLocation(point), MapAnimationKind.NONE)
 }
+
+// https://github.com/microsoft/surface-duo-dual-screen-experience-example/blob/main/app/src/emulator/java/com/microsoft/device/samples/dualscreenexperience/presentation/store/map/BingMapController.kt

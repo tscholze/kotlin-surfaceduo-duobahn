@@ -1,6 +1,6 @@
 package com.github.tscholze.duobahn.data.network.repositories
 
-import com.github.tscholze.duobahn.data.domain.models.MarkerDefinition
+import com.github.tscholze.duobahn.data.domain.models.Mapable
 import com.github.tscholze.duobahn.data.domain.models.toModel
 import com.github.tscholze.duobahn.data.network.dto.Autobahns
 import io.ktor.client.*
@@ -94,5 +94,5 @@ class UnprocessedDataRepository: KoinComponent {
 }
 
 data class MarkerAggregation(
-    val markers: Iterable<MarkerDefinition>
+    val markers: Iterable<Mapable>
 )

@@ -1,12 +1,7 @@
 package com.github.tscholze.duobahn.data.domain.models
 
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import androidx.annotation.DrawableRes
-import androidx.core.content.ContextCompat
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.MarkerOptions
+import com.github.tscholze.duobahn.R
+import com.microsoft.maps.Geopoint
 import java.net.URL
 
 /**
@@ -20,14 +15,16 @@ import java.net.URL
  * @property linkURL to the actual camera feed.
  */
 data class Webcam(
-    val id: String,
+    override val id: String,
     override val title: String,
+    override val location: Geopoint,
+    override val imageId: Int = R.drawable.ic_map_webcam,
+
     val direction: String,
-    override val coordinate: Coordinate,
     val thumbnailURL: URL?,
     val thumbnailUrlString: String,
     val linkURL: URL?
-): MarkerDefinition
+) : Mapable
 
 // MARK: - From Mapper -
 
@@ -45,19 +42,9 @@ fun com.github.tscholze.duobahn.data.network.dto.Webcam.toModel(): Webcam {
         id = identifier,
         title = title,
         direction = subtitle,
-        coordinate = coordinate.toModel(),
+        location = coordinate.toModel().toGeoPoint(),
         thumbnailURL = thumbnailURL,
         thumbnailUrlString = imageurl,
         linkURL = linkURL
     )
-}
-
-fun MarkerOptions.icon(context: Context, @DrawableRes vectorDrawable: Int): MarkerOptions {
-    this.icon(ContextCompat.getDrawable(context, vectorDrawable)?.run {
-        setBounds(0, 0, intrinsicWidth, intrinsicHeight)
-        val bitmap = Bitmap.createBitmap(intrinsicWidth, intrinsicHeight, Bitmap.Config.ARGB_8888)
-        draw(Canvas(bitmap))
-        BitmapDescriptorFactory.fromBitmap(bitmap)
-    })
-    return this
 }

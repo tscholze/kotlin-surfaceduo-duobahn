@@ -1,5 +1,7 @@
 package com.github.tscholze.duobahn.data.domain.models
 
+import com.microsoft.maps.Geopoint
+
 // MARK: - Data -
 
 /**
@@ -27,3 +29,10 @@ fun com.github.tscholze.duobahn.data.network.dto.Autobahn.toModel() = Autobahn(
     roadworks = roadworks.map { it.toModel() },
     webcams = webcams.map { it.toModel() }
 )
+
+interface Mapable {
+    val id: String
+    val title: String
+    val location: Geopoint
+    val imageId: Int
+}
