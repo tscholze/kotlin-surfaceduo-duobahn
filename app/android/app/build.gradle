@@ -74,6 +74,7 @@ dependencies {
 
     // Google
     implementation 'com.google.android.material:material:1.5.0'
+    implementation "com.google.accompanist:accompanist-permissions:0.24.9-beta"
 
     // JetBrains
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0'
