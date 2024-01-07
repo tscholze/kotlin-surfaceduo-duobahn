@@ -3,6 +3,9 @@
 # kotlin-surfaceduo-duobahn
 > DuoBahn for Surface Duo will be an Kotlin Compose-based Android app for foldable devices that uses the federal German Autobahn API as a data source.
 
+## ℹ️ Surface Duo sunsetted
+Due to that fact that Microsoft sunsetted its Surface Duo product line, this repository is not longer usable or testable and that's why it is archived. I really hope Microsoft will bring back such device in the future.
+
 ## Build status
 
 |Service|Status|
